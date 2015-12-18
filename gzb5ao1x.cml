@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace InternetCrawlerGUI
+{
+
+    public class CountryItem
+    {
+
+        public CountryItem(string name, string code)
+        {
+            Name = name;
+            Code = code;
+        }
+
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string ResourcePath
+        {
+            get { return string.Format("pack://application:,,,/Resources/{0}.png",Code); }
+        }
+
+        public override string ToString()
+        {
+            return Code;
+        }
+    }
+
+    public static class CountryList
+    {
+        public static List<CountryItem> GetCountries()
+        {
+            var countries = new List<CountryItem>()
+            {
+                new CountryItem("Polska","pl"),
+                new CountryItem("RPA","rpa")
+            };
+            return countries;
+        }
+
+
+    }
+}
