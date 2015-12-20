@@ -61,6 +61,15 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to none.
+        /// </summary>
+        internal static string AppNone {
+            get {
+                return ResourceManager.GetString("AppNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DEF title.
         /// </summary>
         internal static string AppTitle {
@@ -129,6 +138,51 @@ namespace SimplifiedPaint.Properties {
         internal static string SetttingsPageTheme {
             get {
                 return ResourceManager.GetString("SetttingsPageTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced.
+        /// </summary>
+        internal static string ToolsOptionsAdvanced {
+            get {
+                return ResourceManager.GetString("ToolsOptionsAdvanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backcolor.
+        /// </summary>
+        internal static string ToolsOptionsBackColor {
+            get {
+                return ResourceManager.GetString("ToolsOptionsBackColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forecolor.
+        /// </summary>
+        internal static string ToolsOptionsForeColor {
+            get {
+                return ResourceManager.GetString("ToolsOptionsForeColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standard.
+        /// </summary>
+        internal static string ToolsOptionsStandard {
+            get {
+                return ResourceManager.GetString("ToolsOptionsStandard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thickness.
+        /// </summary>
+        internal static string ToolsOptionsThickness {
+            get {
+                return ResourceManager.GetString("ToolsOptionsThickness", resourceCulture);
             }
         }
     }

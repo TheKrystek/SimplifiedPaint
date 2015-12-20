@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppNone" xml:space="preserve">
+    <value>brak</value>
+  </data>
   <data name="AppTitle" xml:space="preserve">
     <value>PL title</value>
+  </data>
+  <data name="ToolsOptionsAdvanced" xml:space="preserve">
+    <value>Zaawansowane</value>
+  </data>
+  <data name="ToolsOptionsStandard" xml:space="preserve">
+    <value>Proste</value>
   </data>
 </root>
