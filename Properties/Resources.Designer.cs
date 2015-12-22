@@ -70,7 +70,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DEF title.
+        ///   Looks up a localized string similar to SimpliefiedPaint.
         /// </summary>
         internal static string AppTitle {
             get {
@@ -88,56 +88,146 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author.
+        /// </summary>
+        internal static string PluginsAuthor {
+            get {
+                return ResourceManager.GetString("PluginsAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string PluginsDescription {
+            get {
+                return ResourceManager.GetString("PluginsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is enabled.
+        /// </summary>
+        internal static string PluginsEnabled {
+            get {
+                return ResourceManager.GetString("PluginsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        internal static string PluginsFile {
+            get {
+                return ResourceManager.GetString("PluginsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icon.
+        /// </summary>
+        internal static string PluginsIcon {
+            get {
+                return ResourceManager.GetString("PluginsIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string PluginsName {
+            get {
+                return ResourceManager.GetString("PluginsName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        internal static string PluginsVersion {
+            get {
+                return ResourceManager.GetString("PluginsVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string SettingsPageAbout {
+            get {
+                return ResourceManager.GetString("SettingsPageAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        internal static string SettingsPageAppearance {
+            get {
+                return ResourceManager.GetString("SettingsPageAppearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color:.
         /// </summary>
-        internal static string SetttingsPageColor {
+        internal static string SettingsPageColor {
             get {
-                return ResourceManager.GetString("SetttingsPageColor", resourceCulture);
+                return ResourceManager.GetString("SettingsPageColor", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Font size:.
         /// </summary>
-        internal static string SetttingsPageFontSize {
+        internal static string SettingsPageFontSize {
             get {
-                return ResourceManager.GetString("SetttingsPageFontSize", resourceCulture);
+                return ResourceManager.GetString("SettingsPageFontSize", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Interface.
         /// </summary>
-        internal static string SetttingsPageInterface {
+        internal static string SettingsPageInterface {
             get {
-                return ResourceManager.GetString("SetttingsPageInterface", resourceCulture);
+                return ResourceManager.GetString("SettingsPageInterface", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Language:.
         /// </summary>
-        internal static string SetttingsPageLanguage {
+        internal static string SettingsPageLanguage {
             get {
-                return ResourceManager.GetString("SetttingsPageLanguage", resourceCulture);
+                return ResourceManager.GetString("SettingsPageLanguage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        internal static string SetttingsPageName {
+        internal static string SettingsPageName {
             get {
-                return ResourceManager.GetString("SetttingsPageName", resourceCulture);
+                return ResourceManager.GetString("SettingsPageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        internal static string SettingsPagePlugins {
+            get {
+                return ResourceManager.GetString("SettingsPagePlugins", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Theme:.
         /// </summary>
-        internal static string SetttingsPageTheme {
+        internal static string SettingsPageTheme {
             get {
-                return ResourceManager.GetString("SetttingsPageTheme", resourceCulture);
+                return ResourceManager.GetString("SettingsPageTheme", resourceCulture);
             }
         }
         

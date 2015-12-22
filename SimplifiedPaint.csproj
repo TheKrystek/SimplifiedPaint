@@ -97,9 +97,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Tomers.WPF.Localization">
-      <HintPath>..\packages\Tomers.WPF.Localization.dll</HintPath>
-    </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
@@ -153,15 +150,20 @@
     <Compile Include="Converters\TextNumberConverter.cs" />
     <Compile Include="IAbstractTool.cs" />
     <Compile Include="IconButtonBuilder.cs" />
+    <Compile Include="PluginModel.cs" />
     <Compile Include="IToolPlugin.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Pages\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Settings\Plugins.xaml.cs">
+      <DependentUpon>Plugins.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Settings\RelayCommand.cs" />
     <Compile Include="PenPlugin.cs" />
     <Compile Include="PenTool.cs" />
     <Compile Include="PluginLoader.cs" />
+    <Compile Include="PluginsContainer.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -215,6 +217,10 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Page Include="Pages\Settings\Plugins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -232,6 +238,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <Content Include="plugins\LinePlugin.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\logo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

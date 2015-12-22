@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="SimplifiedPaint.Pages.Settings.Plugins"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                lex:ResxLocalizationProvider.DefaultAssembly="SimplifiedPaint"
+                lex:ResxLocalizationProvider.DefaultDictionary="Resources"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel MinWidth="200">
+                <TextBlock Text="{lex:LocTextUpper SettingsPagePlugins}" Style="{StaticResource Heading2}" />
+                <DataGrid  Name="dataGrid" ItemsSource="{Binding PluginsContainer}" AutoGenerateColumns="False" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                    <DataGrid.Columns >
+                        <DataGridTemplateColumn Width="35" MinWidth="35" Header="{lex:Loc PluginsIcon}"  >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <Canvas Width="20" Height="20" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+                                        <Path Data="{Binding Icon}" Stretch="Fill" Fill="Black" Width="20" Height="20"/>
+                                    </Canvas>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="{lex:Loc PluginsName}" Binding="{Binding Name}" Width="*" MinWidth="50"/>
+                        <DataGridTextColumn Header="{lex:Loc PluginsDescription}" Binding="{Binding Description}" Width="*" MinWidth="50"/>
+                        <DataGridTextColumn Header="{lex:Loc PluginsAuthor}" Binding="{Binding Author}" Width="*" MinWidth="50"/>
+                        <DataGridTextColumn Header="{lex:Loc PluginsVersion}" Binding="{Binding Version}" Width="*" MinWidth="50"/>
+                        <DataGridCheckBoxColumn Header="{lex:Loc PluginsEnabled}" Binding="{Binding Enabled}" Width="*" MinWidth="30"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

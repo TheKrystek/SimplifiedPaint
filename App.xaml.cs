@@ -1,15 +1,10 @@
 ﻿using FirstFloor.ModernUI.Presentation;
 using SimplifiedPaint.Properties;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
-using Tomers.WPF.Localization;
 using WPFLocalizeExtension.Engine;
 
 namespace SimplifiedPaint

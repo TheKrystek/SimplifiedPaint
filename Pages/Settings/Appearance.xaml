@@ -12,7 +12,7 @@
     <Grid>
         <ScrollViewer>
             <StackPanel x:Name="Panel" MinWidth="150">
-                <TextBlock Text="{lex:Loc SetttingsPageInterface}" Style="{StaticResource Heading2}" Margin="0,0,0,8" />
+                <TextBlock Text="{lex:LocTextUpper SettingsPageInterface}" Style="{StaticResource Heading2}" Margin="0,0,0,8" />
 
                 <ListBox ItemsSource="{Binding AccentColors}"
                          SelectedItem="{Binding SelectedAccentColor, Mode=TwoWay}"
@@ -44,13 +44,13 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="{lex:Loc SetttingsPageTheme}" VerticalAlignment="Center" Margin="0,0,16,4" />
+                    <TextBlock Text="{lex:Loc SettingsPageTheme}" VerticalAlignment="Center" Margin="0,0,16,4" />
                     <ComboBox Grid.Column="1" ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" DisplayMemberPath="DisplayName" VerticalAlignment="Center" Margin="0,0,0,4"  Height="30"/>
 
-                    <TextBlock Grid.Row="1" Text="{lex:Loc SetttingsPageFontSize}" VerticalAlignment="Center" Margin="0,0,16,4" />
+                    <TextBlock Grid.Row="1" Text="{lex:Loc SettingsPageFontSize}" VerticalAlignment="Center" Margin="0,0,16,4" />
                     <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding FontSizes}" SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,0,4" Height="30"/>
 
-                    <TextBlock Grid.Row="2" Text="{lex:Loc SetttingsPageLanguage}" VerticalAlignment="Center" Margin="0,0,16,4" />
+                    <TextBlock Grid.Row="2" Text="{lex:Loc SettingsPageLanguage}" VerticalAlignment="Center" Margin="0,0,16,4" />
                     <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" VerticalAlignment="Center"  Height="30" />
 
                 </Grid>

@@ -82,5 +82,16 @@ namespace SimplifiedPaint.Properties {
                 this["FontSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection Plugins {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Plugins"]));
+            }
+            set {
+                this["Plugins"] = value;
+            }
+        }
     }
 }

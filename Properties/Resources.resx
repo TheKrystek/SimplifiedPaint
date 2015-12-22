@@ -121,27 +121,57 @@
     <value>none</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>DEF title</value>
+    <value>SimpliefiedPaint</value>
   </data>
   <data name="MainPageName" xml:space="preserve">
     <value />
   </data>
-  <data name="SetttingsPageColor" xml:space="preserve">
+  <data name="PluginsAuthor" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="PluginsDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PluginsEnabled" xml:space="preserve">
+    <value>Is enabled</value>
+  </data>
+  <data name="PluginsFile" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="PluginsIcon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="PluginsName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PluginsVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="SettingsPageAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SettingsPageAppearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="SettingsPageColor" xml:space="preserve">
     <value>Color:</value>
   </data>
-  <data name="SetttingsPageFontSize" xml:space="preserve">
+  <data name="SettingsPageFontSize" xml:space="preserve">
     <value>Font size:</value>
   </data>
-  <data name="SetttingsPageInterface" xml:space="preserve">
+  <data name="SettingsPageInterface" xml:space="preserve">
     <value>Interface</value>
   </data>
-  <data name="SetttingsPageLanguage" xml:space="preserve">
+  <data name="SettingsPageLanguage" xml:space="preserve">
     <value>Language:</value>
   </data>
-  <data name="SetttingsPageName" xml:space="preserve">
+  <data name="SettingsPageName" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="SetttingsPageTheme" xml:space="preserve">
+  <data name="SettingsPagePlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="SettingsPageTheme" xml:space="preserve">
     <value>Theme:</value>
   </data>
   <data name="ToolsOptionsAdvanced" xml:space="preserve">

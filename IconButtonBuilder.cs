@@ -26,7 +26,7 @@ namespace SimplifiedPaint
 
         public static Button GetButton(int width, int height, Thickness padding)
         {
-            Path path = createPath(width, height);
+            Path path = createPath(height, width);
             Canvas canvas = createCanvas(path);
 
             Button button = new Button();
@@ -61,29 +61,45 @@ namespace SimplifiedPaint
             return canvas;
         }
 
-        private static Path createPath(int width, int height)
+        public static Canvas CreateCanvas(int width, int height)
+        {
+            return createCanvas(createPath(height, width));
+        }
+
+
+        public static Path CreatePath(int width, int height)
+        {
+            return createPath(height, width);
+        }
+
+        private static Path createPath(int height, int width)
         {
             Path path = new Path();
 
-            if (!string.IsNullOrWhiteSpace(icon)) {
-                try
-                {
-                    path.Data = Geometry.Parse(icon);
-                }
-                catch (Exception)
-                {
-                    path.Data = Geometry.Parse(defaultIcon);
-                }
-            }
-            else
-                path.Data = Geometry.Parse(defaultIcon);
-
+            path.Data = GetGeomtry();
 
             path.Stretch = Stretch.Fill;
             path.Fill = brush;
             path.Width = width;
             path.Height = height;
             return path;
+        }
+
+        public static Geometry GetGeomtry()
+        {
+            if (!string.IsNullOrWhiteSpace(icon))
+            {
+                try
+                {
+                    return Geometry.Parse(icon);
+                }
+                catch (Exception)
+                {
+                    return Geometry.Parse(defaultIcon);
+                }
+            }
+            else
+                return Geometry.Parse(defaultIcon);
         }
 
         public static string Icon
