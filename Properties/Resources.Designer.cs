@@ -106,7 +106,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is enabled.
+        ///   Looks up a localized string similar to Enabled.
         /// </summary>
         internal static string PluginsEnabled {
             get {

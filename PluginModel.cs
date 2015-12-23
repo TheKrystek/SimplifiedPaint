@@ -13,29 +13,26 @@ namespace SimplifiedPaint
     public class PluginModel
     {
         private IToolPlugin plugin;
-
+        private bool enabled = false;
         Geometry icon;
 
         public PluginModel(IToolPlugin plugin)
         {
-            this.plugin = plugin;
-
-            IconButtonBuilder.Icon = plugin.Icon;
+            Plugin = plugin;
+            IconButtonBuilder.Icon = plugin.Tool.Icon;
             icon = IconButtonBuilder.GetGeomtry();
 
+            if (Properties.Settings.Default.EnabledPlugins == null)
+                Properties.Settings.Default.EnabledPlugins = new System.Collections.Specialized.StringCollection();
+
+            enabled = Properties.Settings.Default.EnabledPlugins.Contains(Name);
         }
 
-        private bool enabled;
+        public string Name { get { return Plugin.Tool.Name; } }
+        public string Author { get { return Plugin.Author; } }
+        public string Version { get { return Plugin.Version; } }
+        public string Description { get { return Plugin.Tool.GetDescription(LocalizeDictionary.Instance.Culture.Name); } }
 
-        public string Name { get { return plugin.Name; } }
-
-
-        public string Author { get { return plugin.Author; } }
-        public string Version { get { return plugin.Version; } }
-        public string Description { get { return plugin.GetDescription(LocalizeDictionary.Instance.Culture.Name); } }
-
-
-        
         public bool Enabled
         {
             get
@@ -45,6 +42,14 @@ namespace SimplifiedPaint
 
             set
             {
+
+
+                // Add or remove current plugin form list of enabled plugins
+                if (value)
+                    Properties.Settings.Default.EnabledPlugins.Add(Name);
+                else
+                    Properties.Settings.Default.EnabledPlugins.Remove(Name);
+
                 enabled = value;
             }
         }
@@ -59,6 +64,19 @@ namespace SimplifiedPaint
             set
             {
                 icon = value;
+            }
+        }
+
+        public IToolPlugin Plugin
+        {
+            get
+            {
+                return plugin;
+            }
+
+            set
+            {
+                plugin = value;
             }
         }
     }

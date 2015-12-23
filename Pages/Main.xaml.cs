@@ -24,11 +24,12 @@ namespace InternetCrawlerGUI.Pages
     /// </summary>
     public partial class Main : UserControl
     {
+        SlidingWindowList<Memento> undoMechanism = new SlidingWindowList<Memento>();
 
         #region 
         Context context;
 
-        PluginLoader loader = new PluginLoader();
+        ToolsContainer toolsContainer = new ToolsContainer();
 
         #endregion
 
@@ -46,23 +47,90 @@ namespace InternetCrawlerGUI.Pages
             context.Canvas = paintArea;
             context.Status = currentTool;
 
-            IToolPlugin plugin = new PenPlugin();
-
-            Button button = loader.getButton(plugin, context);
-
             foreColorPicker.SelectedColor = Colors.Black;
             backColorPicker.SelectedColor = Colors.White;
 
-         
-
-
-            toolsPanel.Children.Add(button);
-
             paintArea.MouseDown += Canvas_MouseDown_1;
             paintArea.MouseMove += Canvas_MouseMove_1;
+            paintArea.MouseUp += Canvas_MouseUp;
         }
 
- 
+        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (context.Tool == null)
+                return;
+
+            SaveState();
+        }
+
+        private void loadTools()
+        {
+            toolsPanel.Children.Clear();
+            foreach (var item in toolsContainer.GetButtons(context))
+                toolsPanel.Children.Add(item);
+
+            // TODO: zrobic obsluge cofania
+            Button back = new Button();
+            back.Content = "Undo";
+            back.Click += (s, e) => Undo();
+
+
+            // TODO: zrobic obsluge cofania
+            Button redo = new Button();
+            redo.Content = "Redo";
+            redo.Click += (s, e) => Redo();
+
+            toolsPanel.Children.Add(back);
+            toolsPanel.Children.Add(redo);
+
+        }
+
+        private void Redo()
+        {
+            undoMechanism.MoveCursorUp();
+            Memento nextState = undoMechanism.Get();
+            if (nextState == null)
+                return;
+
+            foreach (var item in nextState.Items)
+            {
+                paintArea.Children.Remove(item);
+                paintArea.Children.Add(item);
+            }
+
+            undoMechanism.Display();
+
+        }
+
+        private void SaveState()
+        {
+            undoMechanism.Add(new Memento(prevCount, paintArea.Children.Count, getRange(prevCount)));
+            undoMechanism.Display();
+        }
+
+
+        private void Undo()
+        {
+            if (undoMechanism.IsEmpty)
+                return;
+
+            Memento prevState = undoMechanism.Get();
+            undoMechanism.MoveCursorDown();
+            paintArea.Children.RemoveRange(prevState.Start, prevState.Items.Length);
+
+            undoMechanism.Display();
+        }
+
+        private UIElement[] getRange(int start)
+        {
+            int size = paintArea.Children.Count - start;
+            UIElement[] items = new UIElement[size];
+            for (int i = 0; i < size; i++)
+                items[i] = paintArea.Children[start + i];
+
+            return items;
+        }
+
 
 
 
@@ -72,28 +140,27 @@ namespace InternetCrawlerGUI.Pages
             context.ToolOptions.Add(thicknessOption);
         }
 
+        #region Events handlers
+
+
+        int prevCount = 0;
+
         private void Canvas_MouseDown_1(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (context.Tool != null)
-                context.Tool.OnMouseDown(e);
+            if (context.Tool == null)
+                return;
+
+            context.Tool.OnMouseDown(e);
+            prevCount = paintArea.Children.Count;
         }
 
 
         private void Canvas_MouseMove_1(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            if (context.Tool != null)
-                context.Tool.OnMouseMove(e);
+            if (context.Tool == null)
+                return;
+            context.Tool.OnMouseMove(e);
         }
-
-
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
-        #region Events handlers
 
         private void foreColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
@@ -115,6 +182,13 @@ namespace InternetCrawlerGUI.Pages
             context.StrokeThickness = e.NewValue;
         }
 
+        int count = 0;
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (count == 0)
+                loadTools();
+            count = (count + 1) % 2;
+        }
         #endregion
 
 

@@ -160,7 +160,6 @@
       <DependentUpon>Plugins.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings\RelayCommand.cs" />
-    <Compile Include="PenPlugin.cs" />
     <Compile Include="PenTool.cs" />
     <Compile Include="PluginLoader.cs" />
     <Compile Include="PluginsContainer.cs" />
@@ -174,6 +173,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SlidingWindowList.cs" />
+    <Compile Include="ToolsContainer.cs" />
+    <Compile Include="Memento.cs" />
     <Page Include="Assets\Dark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -238,9 +240,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
-    <Content Include="plugins\LinePlugin.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\logo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

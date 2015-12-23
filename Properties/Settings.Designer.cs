@@ -85,12 +85,12 @@ namespace SimplifiedPaint.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection Plugins {
+        public global::System.Collections.Specialized.StringCollection EnabledPlugins {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Plugins"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["EnabledPlugins"]));
             }
             set {
-                this["Plugins"] = value;
+                this["EnabledPlugins"] = value;
             }
         }
     }

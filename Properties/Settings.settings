@@ -17,7 +17,7 @@
     <Setting Name="FontSize" Type="System.String" Scope="User">
       <Value Profile="(Default)">normal</Value>
     </Setting>
-    <Setting Name="Plugins" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="EnabledPlugins" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

@@ -13,9 +13,9 @@
         <ScrollViewer>
             <StackPanel MinWidth="200">
                 <TextBlock Text="{lex:LocTextUpper SettingsPagePlugins}" Style="{StaticResource Heading2}" />
-                <DataGrid  Name="dataGrid" ItemsSource="{Binding PluginsContainer}" AutoGenerateColumns="False" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <DataGrid  Name="dataGrid" ItemsSource="{Binding PluginsContainer}" AutoGenerateColumns="False" >
                     <DataGrid.Columns >
-                        <DataGridTemplateColumn Width="35" MinWidth="35" Header="{lex:Loc PluginsIcon}"  >
+                        <DataGridTemplateColumn Width="auto" Header="{lex:Loc PluginsIcon}" IsReadOnly="True" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <Canvas Width="20" Height="20" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
@@ -24,12 +24,12 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="{lex:Loc PluginsName}" Binding="{Binding Name}" Width="*" MinWidth="50"/>
-                        <DataGridTextColumn Header="{lex:Loc PluginsDescription}" Binding="{Binding Description}" Width="*" MinWidth="50"/>
-                        <DataGridTextColumn Header="{lex:Loc PluginsAuthor}" Binding="{Binding Author}" Width="*" MinWidth="50"/>
-                        <DataGridTextColumn Header="{lex:Loc PluginsVersion}" Binding="{Binding Version}" Width="*" MinWidth="50"/>
-                        <DataGridCheckBoxColumn Header="{lex:Loc PluginsEnabled}" Binding="{Binding Enabled}" Width="*" MinWidth="30"/>
-
+                        <mui:DataGridTextColumn Header="{lex:Loc PluginsName}" Binding="{Binding Name}" Width="*" MinWidth="50" IsReadOnly="True" />
+                        <mui:DataGridTextColumn Header="{lex:Loc PluginsDescription}" Binding="{Binding Description}" Width="*" MinWidth="50" IsReadOnly="True"/>
+                        <mui:DataGridTextColumn Header="{lex:Loc PluginsAuthor}" Binding="{Binding Author}" Width="*" MinWidth="50" IsReadOnly="True"/>
+                        <mui:DataGridTextColumn Header="{lex:Loc PluginsVersion}" Binding="{Binding Version}" Width="*"  MinWidth="50" IsReadOnly="True"/>
+                        <mui:DataGridCheckBoxColumn Header="{lex:Loc PluginsEnabled}" Binding="{Binding Enabled}" Width="*" MinWidth="30" />
+                      
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

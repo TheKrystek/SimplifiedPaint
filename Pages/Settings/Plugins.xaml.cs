@@ -27,20 +27,8 @@ namespace SimplifiedPaint.Pages.Settings
         {
             InitializeComponent();
 
-
-            PluginLoader.LoadLibraries();
-            PluginLoader.ListPlugins();
-
-            List<PluginModel> models = new List<PluginModel>();
-            foreach (var item in PluginLoader.Plugins)
-            {
-                models.Add(new PluginModel(item));
-            }
-
-            PluginsContainer = new PluginsContainer(models);
+            pluginsContainer = new PluginsContainer(PluginLoader.Instance.AllPluginModels);
             dataGrid.ItemsSource = PluginsContainer;
-
-
         }
 
         public PluginsContainer PluginsContainer

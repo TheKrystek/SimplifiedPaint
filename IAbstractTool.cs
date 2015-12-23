@@ -9,12 +9,21 @@ namespace SimplifiedPaint
 {
     public interface IAbstractTool
     {
-        ICollection<Options> GetToolOptions(); 
+        #region Actions
         void OnMouseDown(MouseButtonEventArgs e);
         void OnMouseUp(MouseButtonEventArgs e);
         void OnMouseMove(MouseEventArgs e);
+        #endregion
 
+        #region Description
+        string Name { get; }
+        string GetDescription(string langCode);
+        string Icon { get; }
+        #endregion
+
+        #region Options and context
+        ICollection<Options> GetToolOptions();
         Context Context { get; set; }
-
+        #endregion
     }
 }

@@ -14,7 +14,8 @@ namespace SimplifiedPaint
         {
         }
 
-
-
+        public List<PluginModel> GetEnabledPlugins() {
+            return Items.Where(p => p.Enabled).ToList();
+        }
     }
 }

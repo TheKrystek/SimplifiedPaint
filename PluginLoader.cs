@@ -11,58 +11,34 @@ using WPFLocalizeExtension.Engine;
 
 namespace SimplifiedPaint
 {
-    class PluginLoader
+    public sealed class PluginLoader
     {
-        private static List<IToolPlugin> plugins = new List<IToolPlugin>();
-        private static string pluginPath = "plugins";
+        static readonly PluginLoader _instance = new PluginLoader();
+        static readonly List<PluginModel> models = new List<PluginModel>();
+        static List<IToolPlugin> plugins = new List<IToolPlugin>();
+        static string pluginPath = "plugins";
 
-        public static List<IToolPlugin> Plugins
+        PluginLoader()
+        { }
+
+        public void LoadLibraries()
         {
-            get
-            {
-                return plugins;
-            }
-
-            set
-            {
-                plugins = value;
-            }
+            plugins.Clear();
+            loadLibraries();
+            createPluginsModel();
         }
 
-        public Button getButton(IToolPlugin plugin, Context context)
+        private void loadLibraries()
         {
-            IconButtonBuilder.Icon = plugin.Icon;
-            IconButtonBuilder.Name = plugin.Name;
-            IconButtonBuilder.Description = plugin.GetDescription(LocalizeDictionary.CurrentCulture.Name);
-
-            Button button = IconButtonBuilder.GetButton();
-
-
-            button.Click += (s, e) =>
-            {
-                Debug.Print("'{0}' has been choosed", plugin.Name);
-                context.ChangeTool(plugin.Tool);
-            };
-
-            return button;
-        }
-
-        public static void LoadLibraries()
-        {
-            
             DirectoryInfo d = new DirectoryInfo(pluginPath);
             if (!d.Exists)
                 return;
 
             foreach (var file in d.GetFiles("*.dll"))
-            {
-                Console.WriteLine(file.Name + " loading...");
                 loadLibrary(file.FullName);
-            }
         }
 
-
-        static void loadLibrary(string path)
+        private void loadLibrary(string path)
         {
             string assembly = Path.GetFullPath(path);
             Assembly ptrAssembly = Assembly.LoadFile(assembly);
@@ -79,15 +55,51 @@ namespace SimplifiedPaint
         }
 
 
-        public static void ListPlugins()
+        private void createPluginsModel()
         {
-            int i = 1;
-            Console.WriteLine("\r\nAvailable plugins:");
-            foreach (IToolPlugin plugin in Plugins)
+            models.Clear();
+            foreach (var item in plugins)
+                models.Add(new PluginModel(item));
+        }
+
+        #region Getters and setters
+        public static PluginLoader Instance
+        {
+            get
             {
-                Console.WriteLine("{0}. {1} - {2}", i++, plugin.Name, plugin.GetDescription("pl"));
+                return _instance;
             }
         }
+
+        public List<IToolPlugin> Plugins
+        {
+            get
+            {
+                return plugins;
+            }
+
+            set
+            {
+                plugins = value;
+            }
+        }
+
+        public List<PluginModel> AllPluginModels
+        {
+            get
+            {
+                return models;
+            }
+        }
+
+        public List<PluginModel> EnabledPluginModels
+        {
+            get
+            {
+                return models.Where(p => p.Enabled).ToList();
+            }
+        }
+        #endregion
 
     }
 }

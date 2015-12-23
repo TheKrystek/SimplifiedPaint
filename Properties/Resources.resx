@@ -133,7 +133,7 @@
     <value>Description</value>
   </data>
   <data name="PluginsEnabled" xml:space="preserve">
-    <value>Is enabled</value>
+    <value>Enabled</value>
   </data>
   <data name="PluginsFile" xml:space="preserve">
     <value>File</value>
