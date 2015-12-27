@@ -17,9 +17,10 @@
         <WrapPanel DockPanel.Dock="Top" Name="upperPanel" Margin="0,0,0,5">
             <Button Name="undo" />
             <Button Name="redo" />
-            <Button Name="clear" />
-            <Button Name="resize" />
-            <Button Name="save" Click="save_Click"/>
+            <Button Name="discard" Content="{lex:Loc AppDiscard}" ToolTip="{lex:Loc AppDiscardDescription}"/>
+            <Button Name="resize" Content="{lex:Loc AppDiscard}" ToolTip="{lex:Loc AppDiscardDescription}"/>
+            <Button Name="save" Content="{lex:Loc AppSave}" ToolTip="{lex:Loc AppSaveDescription}" Click="save_Click"/>
+            <Button Name="open" Content="{lex:Loc AppOpen}" ToolTip="{lex:Loc AppOpenDescription}" Click="open_Click"/>
 
         </WrapPanel>
         <WrapPanel DockPanel.Dock="Bottom"  Margin="-40,0,-30,-15" HorizontalAlignment="Left" VerticalAlignment="Bottom">

@@ -61,6 +61,24 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Discard.
+        /// </summary>
+        internal static string AppDiscard {
+            get {
+                return ResourceManager.GetString("AppDiscard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard all changes.
+        /// </summary>
+        internal static string AppDiscardDescription {
+            get {
+                return ResourceManager.GetString("AppDiscardDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to discard all changes? It&apos;ll be not possible to restore them again..
         /// </summary>
         internal static string AppDiscardMessage {
@@ -97,11 +115,47 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open....
+        /// </summary>
+        internal static string AppOpen {
+            get {
+                return ResourceManager.GetString("AppOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open image.
+        /// </summary>
+        internal static string AppOpenDescription {
+            get {
+                return ResourceManager.GetString("AppOpenDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redo.
         /// </summary>
         internal static string AppRedo {
             get {
                 return ResourceManager.GetString("AppRedo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string AppSave {
+            get {
+                return ResourceManager.GetString("AppSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save image as PNG file.
+        /// </summary>
+        internal static string AppSaveDescription {
+            get {
+                return ResourceManager.GetString("AppSaveDescription", resourceCulture);
             }
         }
         
@@ -115,7 +169,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to save?.
+        ///   Looks up a localized string similar to There are unsaved changes. Do you want to save before exit?.
         /// </summary>
         internal static string AppSaveFileQuestion {
             get {

@@ -30,6 +30,8 @@ namespace InternetCrawlerGUI.Pages
         SlidingWindowList<Memento> undoMechanism = new SlidingWindowList<Memento>();
         Context context;
         ToolsContainer toolsContainer = new ToolsContainer();
+        string filePath = "image.png";
+        bool saved = true;
         #endregion
 
 
@@ -52,7 +54,7 @@ namespace InternetCrawlerGUI.Pages
 
             addUndoRedoButtons();
 
-            clear.Click += Clear_Click;
+            discard.Click += Clear_Click;
 
             // Set up event handlers
             paintArea.MouseDown += Canvas_MouseDown;
@@ -76,6 +78,7 @@ namespace InternetCrawlerGUI.Pages
             if (dlg.DialogResult.HasValue && dlg.DialogResult.Value)
             {
                 paintArea.Children.Clear();
+                saved = true;
                 undo.IsEnabled = false;
                 redo.IsEnabled = false;
                 undoMechanism.Clear();
@@ -118,6 +121,8 @@ namespace InternetCrawlerGUI.Pages
 
             undoMechanism.Add(memento);
             undoMechanism.Display();
+
+            saved = false;
         }
 
         private void Redo()
@@ -248,7 +253,6 @@ namespace InternetCrawlerGUI.Pages
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
-
             // Create OpenFileDialog 
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
 
@@ -259,10 +263,63 @@ namespace InternetCrawlerGUI.Pages
             bool? result = dlg.ShowDialog();
 
             if (result.HasValue && result.Value)
+            {
+                saved = true;
                 CanvasRenderer.SaveToPNG(paintArea, dlg.FileName);
+            }
+        }
+
+
+        private void open_Click(object sender, RoutedEventArgs e)
+        {
+            // First of all check if there are unsaved changes
+            if (!saved) {
+                if (askForSave() == FileDialogResults.ok)
+                    save_Click(sender, null);
+                else
+                    saved = true;
+            }
+
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".png";
+            dlg.Filter = "PNG Files (*.png)|*.png";
+            dlg.FileName = filePath;
+
+            bool? result = dlg.ShowDialog();
+
+            if (result.HasValue && result.Value)
+                paintArea.Background = CanvasRenderer.LoadFromFile(dlg.FileName);
+
         }
 
 
 
+        private FileDialogResults askForSave()
+        {
+            var dlg = new ModernDialog
+            {
+                Title = LocalizationProvider.GetLocalizedValue<string>("AppSaveFileTitle"),
+                Content = new TextBlock()
+                {
+                    Text = LocalizationProvider.GetLocalizedValue<string>("AppSaveFileQuestion")
+                }
+            };
+            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton,};
+            
+
+            if (dlg.DialogResult.HasValue)
+                if (dlg.DialogResult.Value)
+                    return FileDialogResults.ok;
+            return FileDialogResults.cancel;
+        }
+
+
+
+        enum FileDialogResults {
+            yes, no, cancel, ok
+        }
     }
 }

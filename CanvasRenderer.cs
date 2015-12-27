@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace SimplifiedPaint
@@ -30,9 +31,11 @@ namespace SimplifiedPaint
             System.IO.File.WriteAllBytes(filePath, ms.ToArray());
         }
 
-
-
-
+        public static ImageBrush LoadFromFile(string filePath) {
+            ImageBrush brush = new ImageBrush();
+            brush.ImageSource = new BitmapImage(new Uri(filePath, UriKind.RelativeOrAbsolute));
+            return brush;
+        }
     }
 
 }
