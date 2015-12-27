@@ -7,7 +7,8 @@ namespace SimplifiedPaint
     {
         int start, end;
         UIElement[] items;
-
+        double width, height;
+        IAbstractTool tool;
 
         public Memento(int start, int end, UIElement[] items)
         {
@@ -16,6 +17,10 @@ namespace SimplifiedPaint
             this.items = items;
         }
 
+        public void setCanvasSize(double width, double height) {
+            this.width = width;
+            this.height = height;
+        }
 
         public int Start
         {
@@ -53,6 +58,45 @@ namespace SimplifiedPaint
             set
             {
                 items = value;
+            }
+        }
+
+        public double Width
+        {
+            get
+            {
+                return width;
+            }
+
+            set
+            {
+                width = value;
+            }
+        }
+
+        public double Height
+        {
+            get
+            {
+                return height;
+            }
+
+            set
+            {
+                height = value;
+            }
+        }
+
+        public IAbstractTool Tool
+        {
+            get
+            {
+                return tool;
+            }
+
+            set
+            {
+                tool = value;
             }
         }
 

@@ -144,12 +144,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CanvasRenderer.cs" />
     <Compile Include="ColorUtil.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Converters\VisiblityToBool.cs" />
     <Compile Include="Converters\TextNumberConverter.cs" />
     <Compile Include="IAbstractTool.cs" />
     <Compile Include="IconButtonBuilder.cs" />
+    <Compile Include="LocalizationProvider.cs" />
     <Compile Include="PluginModel.cs" />
     <Compile Include="IToolPlugin.cs" />
     <Compile Include="Options.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="SlidingWindowList.cs" />
     <Compile Include="ToolsContainer.cs" />
     <Compile Include="Memento.cs" />
+    <Compile Include="UIHelpers.cs" />
     <Page Include="Assets\Dark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

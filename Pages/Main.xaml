@@ -12,28 +12,30 @@
         lex:ResxLocalizationProvider.DefaultDictionary="Resources"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
-    <Grid  >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <WrapPanel Grid.Row="0" Grid.ColumnSpan="2" Background="Purple" Name="upperPanel"/>
-        <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource BorderColorBrush}" >
+
+    <DockPanel LastChildFill="True">
+        <WrapPanel DockPanel.Dock="Top" Name="upperPanel" Margin="0,0,0,5">
+            <Button Name="undo" />
+            <Button Name="redo" />
+            <Button Name="clear" />
+            <Button Name="resize" />
+            <Button Name="save" Click="save_Click"/>
+
+        </WrapPanel>
+        <WrapPanel DockPanel.Dock="Bottom"  Margin="-40,0,-30,-15" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <TextBlock Name="currentTool" Text="{lex:Loc AppNone}" ToolTip="{lex:Loc CanvasCurrnetTool}"/>
+        </WrapPanel>
+        <Border DockPanel.Dock="Left" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource BorderColorBrush}" >
             <Grid Name="leftPanel" Margin="0,0,5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" MinHeight="100"/>
                     <RowDefinition Height="*" MinHeight="100"/>
                 </Grid.RowDefinitions>
                 <WrapPanel Name="toolsPanel" Grid.Row="0">
-                
+
                 </WrapPanel >
                 <StackPanel Name="optionsPanel" Grid.Row="1">
-                    <Grid  Name="colorOption" Margin="0,5,5,5">
+                    <Grid  Name="colorOption" Margin="0,5,5,5" ToolTip="{lex:Loc CanvasColorPickerDescription}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*"/>
@@ -42,11 +44,11 @@
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                    
-                    <Label Grid.Column="0" Grid.Row="0" Content="{lex:Loc ToolsOptionsForecolor}" VerticalAlignment="Center" />
-                    <Label Grid.Column="0" Grid.Row="1" Content="{lex:Loc ToolsOptionsBackcolor}" VerticalAlignment="Center" />
 
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="0" Name="foreColorPicker"  MinHeight="30" ShowDropDownButton="False" HorizontalAlignment="Right"
+                        <Label Grid.Column="0" Grid.Row="0" Content="{lex:Loc ToolsOptionsForecolor}" VerticalAlignment="Center" />
+                        <Label Grid.Column="0" Grid.Row="1" Content="{lex:Loc ToolsOptionsBackcolor}" VerticalAlignment="Center" />
+
+                        <xctk:ColorPicker Grid.Column="1" Grid.Row="0" Name="foreColorPicker"  MinHeight="30" ShowDropDownButton="False" HorizontalAlignment="Right"
                                       AdvancedButtonHeader="{lex:Loc ToolsOptionsAdvanced}"
                                       StandardButtonHeader="{lex:Loc ToolsOptionsStandard}"
                                           AvailableColorsSortingMode="HueSaturationBrightness"
@@ -61,41 +63,36 @@
                                       MaxHeight="30" MaxWidth="30" MinWidth="30"  Padding="3,0,3,0" BorderBrush="{DynamicResource BorderColorBrush}" SelectedColorChanged="backColorPicker_SelectedColorChanged"
                                           />
                     </Grid>
-
-                    <StackPanel Name="thicknessOption" Margin="0,5,0,5">
+                    <StackPanel Name="thicknessOption" Margin="0,5,0,5"  ToolTip="{lex:Loc CanvasThicknessDescription}">
                         <Label Content="{lex:Loc ToolsOptionsThickness}" VerticalAlignment="Center"/>
                         <Slider Name="thicknessSlider" Minimum="1" Maximum="40" AutoToolTipPlacement="BottomRight" ValueChanged="thicknessSlider_ValueChanged"/>
                     </StackPanel>
-
-
-  
                 </StackPanel>
             </Grid>
         </Border>
-        <Grid Grid.Row="1" Grid.Column="1" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="400" MaxHeight="{c:Binding ElementName=leftPanel,Path=ActualHeight-4, Mode=OneWay}"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400" MaxWidth="{c:Binding ElementName=upperPanel,Path=ActualWidth-104, Mode=OneWay}"/>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Grid.Row="0"  Background="{DynamicResource BorderColorBrush}" >
-                <Canvas  Background="#ffffff" Name="paintArea" ClipToBounds="True">
 
-                </Canvas>
-            </Border>
-            <GridSplitter ToolTip="test" Grid.Row="0" Grid.Column="1" Margin="2,0,2,0" Width="2" Background="{DynamicResource BorderColorBrush}" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
-            <GridSplitter Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" Height="2" Background="{DynamicResource BorderColorBrush}" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
-        </Grid>
-        <WrapPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="Crimson" Margin="-40,0,-30,-15" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <TextBlock Name="currentTool" Text="{lex:Loc AppNone}" />
-        </WrapPanel>
+   
 
-    </Grid>
+        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Grid  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="400" Name="canvasRow"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400" Name="canvasColumn"/>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Grid.Row="0" Background="{DynamicResource BorderColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Canvas  Background="#ffffff" Name="paintArea" ClipToBounds="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-
+                    </Canvas>
+                </Border>
+                <GridSplitter ToolTip="{lex:Loc CanvasResizeVertical}" Grid.Row="0" Grid.Column="1" Margin="2,0,2,0" Width="2" Background="{DynamicResource BorderColorBrush}" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
+                <GridSplitter ToolTip="{lex:Loc CanvasResizeHorizontal}" Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" Height="2" Background="{DynamicResource BorderColorBrush}" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+            </Grid>
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>

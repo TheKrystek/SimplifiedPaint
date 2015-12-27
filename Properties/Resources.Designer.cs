@@ -61,6 +61,33 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to discard all changes? It&apos;ll be not possible to restore them again..
+        /// </summary>
+        internal static string AppDiscardMessage {
+            get {
+                return ResourceManager.GetString("AppDiscardMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard changes?.
+        /// </summary>
+        internal static string AppDiscardMessageTitle {
+            get {
+                return ResourceManager.GetString("AppDiscardMessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can undo up to {0} moves.
+        /// </summary>
+        internal static string AppHistorySize {
+            get {
+                return ResourceManager.GetString("AppHistorySize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to none.
         /// </summary>
         internal static string AppNone {
@@ -70,11 +97,101 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Redo.
+        /// </summary>
+        internal static string AppRedo {
+            get {
+                return ResourceManager.GetString("AppRedo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File with the given name already exists. Do you want to overwrite it?.
+        /// </summary>
+        internal static string AppSaveFileOverwrite {
+            get {
+                return ResourceManager.GetString("AppSaveFileOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to save?.
+        /// </summary>
+        internal static string AppSaveFileQuestion {
+            get {
+                return ResourceManager.GetString("AppSaveFileQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string AppSaveFileTitle {
+            get {
+                return ResourceManager.GetString("AppSaveFileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SimpliefiedPaint.
         /// </summary>
         internal static string AppTitle {
             get {
                 return ResourceManager.GetString("AppTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        internal static string AppUndo {
+            get {
+                return ResourceManager.GetString("AppUndo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changes foreground or background color of the current tool.
+        /// </summary>
+        internal static string CanvasColorPickerDescription {
+            get {
+                return ResourceManager.GetString("CanvasColorPickerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current tool.
+        /// </summary>
+        internal static string CanvasCurrnetTool {
+            get {
+                return ResourceManager.GetString("CanvasCurrnetTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tes.
+        /// </summary>
+        internal static string CanvasResizeHorizontal {
+            get {
+                return ResourceManager.GetString("CanvasResizeHorizontal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to test.
+        /// </summary>
+        internal static string CanvasResizeVertical {
+            get {
+                return ResourceManager.GetString("CanvasResizeVertical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changes thickness of the current tool.
+        /// </summary>
+        internal static string CanvasThicknessDescription {
+            get {
+                return ResourceManager.GetString("CanvasThicknessDescription", resourceCulture);
             }
         }
         

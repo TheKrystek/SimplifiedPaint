@@ -25,22 +25,25 @@ namespace SimplifiedPaint
         public void OnMouseMove(MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                Line line = new Line();
+                action(Context.ForeColorBrush, e);
 
-                line.Stroke = Context.ForeColorBrush;
-                line.X1 = currentPoint.X;
-                line.Y1 = currentPoint.Y;
-                line.X2 = e.GetPosition(Context.Canvas).X;
-                line.Y2 = e.GetPosition(Context.Canvas).Y;
-                line.StrokeThickness = Context.StrokeThickness;
-                line.StrokeStartLineCap = PenLineCap.Round;
-                line.StrokeEndLineCap = PenLineCap.Round;
+            if (e.RightButton == MouseButtonState.Pressed)
+                action(Context.BackColorBrush, e);
+        }
 
-                currentPoint = e.GetPosition(Context.Canvas);
-
-                Context.Canvas.Children.Add(line);
-            }
+        private void action(Brush brush, MouseEventArgs e)
+        {
+            Line line = new Line();
+            line.Stroke = brush;
+            line.X1 = currentPoint.X;
+            line.Y1 = currentPoint.Y;
+            line.X2 = e.GetPosition(Context.Canvas).X;
+            line.Y2 = e.GetPosition(Context.Canvas).Y;
+            line.StrokeThickness = Context.StrokeThickness;
+            line.StrokeStartLineCap = PenLineCap.Round;
+            line.StrokeEndLineCap = PenLineCap.Round;
+            currentPoint = e.GetPosition(Context.Canvas);
+            Context.Canvas.Children.Add(line);
         }
 
         public void OnMouseUp(MouseButtonEventArgs e)

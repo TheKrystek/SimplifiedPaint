@@ -1,4 +1,5 @@
-﻿using SimplifiedPaint;
+﻿using FirstFloor.ModernUI.Windows.Controls;
+using SimplifiedPaint;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -24,13 +25,11 @@ namespace InternetCrawlerGUI.Pages
     /// </summary>
     public partial class Main : UserControl
     {
+
+        #region Fields
         SlidingWindowList<Memento> undoMechanism = new SlidingWindowList<Memento>();
-
-        #region 
         Context context;
-
         ToolsContainer toolsContainer = new ToolsContainer();
-
         #endregion
 
 
@@ -47,42 +46,78 @@ namespace InternetCrawlerGUI.Pages
             context.Canvas = paintArea;
             context.Status = currentTool;
 
+            // Set default colorpickers values
             foreColorPicker.SelectedColor = Colors.Black;
             backColorPicker.SelectedColor = Colors.White;
 
-            paintArea.MouseDown += Canvas_MouseDown_1;
-            paintArea.MouseMove += Canvas_MouseMove_1;
+            addUndoRedoButtons();
+
+            clear.Click += Clear_Click;
+
+            // Set up event handlers
+            paintArea.MouseDown += Canvas_MouseDown;
+            paintArea.MouseMove += Canvas_MouseMove;
             paintArea.MouseUp += Canvas_MouseUp;
         }
 
-        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Clear_Click(object sender, RoutedEventArgs e)
         {
-            if (context.Tool == null)
-                return;
+            var dlg = new ModernDialog
+            {
+                Title = LocalizationProvider.GetLocalizedValue<string>("AppDiscardMessageTitle"),
+                Content = new TextBlock()
+                {
+                    Text = LocalizationProvider.GetLocalizedValue<string>("AppDiscardMessage")
+                }
+            };
+            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
+            dlg.ShowDialog();
 
-            SaveState();
+            if (dlg.DialogResult.HasValue && dlg.DialogResult.Value)
+            {
+                paintArea.Children.Clear();
+                undo.IsEnabled = false;
+                redo.IsEnabled = false;
+                undoMechanism.Clear();
+            }
         }
 
-        private void loadTools()
+        #region Undo/Redo mechanism    
+
+        /// <summary>
+        /// Setup Undo and Redo buttons and add them to panel
+        /// </summary>
+        private void addUndoRedoButtons()
         {
-            toolsPanel.Children.Clear();
-            foreach (var item in toolsContainer.GetButtons(context))
-                toolsPanel.Children.Add(item);
+            string toolTip = string.Format(LocalizationProvider.GetLocalizedValue<string>("AppHistorySize"), undoMechanism.MaxSize);
 
-            // TODO: zrobic obsluge cofania
-            Button back = new Button();
-            back.Content = "Undo";
-            back.Click += (s, e) => Undo();
+            undo.Content = LocalizationProvider.GetLocalizedValue<string>("AppUndo");
+            undo.Click += (s, e) => Undo();
+            undo.IsEnabled = false;
+            undo.ToolTip = toolTip;
 
-
-            // TODO: zrobic obsluge cofania
-            Button redo = new Button();
-            redo.Content = "Redo";
+            redo.Content = LocalizationProvider.GetLocalizedValue<string>("AppRedo");
             redo.Click += (s, e) => Redo();
+            redo.IsEnabled = false;
+            redo.ToolTip = toolTip;
+        }
 
-            toolsPanel.Children.Add(back);
-            toolsPanel.Children.Add(redo);
+        /// <summary>
+        /// Save program state every time users uses paint tools
+        /// </summary>
+        private void SaveState()
+        {
+            // Enable Undo and disable Redo button
+            undo.IsEnabled = true;
+            redo.IsEnabled = false;
 
+            undoMechanism.clearRange();
+            var memento = new Memento(prevCount, paintArea.Children.Count, UIHelpers.GetRange(paintArea, prevCount));
+            memento.setCanvasSize(paintArea.ActualWidth, paintArea.ActualHeight);
+            memento.Tool = context.Tool;
+
+            undoMechanism.Add(memento);
+            undoMechanism.Display();
         }
 
         private void Redo()
@@ -92,21 +127,23 @@ namespace InternetCrawlerGUI.Pages
             if (nextState == null)
                 return;
 
-            foreach (var item in nextState.Items)
-            {
-                paintArea.Children.Remove(item);
-                paintArea.Children.Add(item);
-            }
+            if (nextState.Items != null)
+                foreach (var item in nextState.Items)
+                {
+                    paintArea.Children.Remove(item);
+                    paintArea.Children.Add(item);
+                }
 
+            setCanvasSize(nextState.Width, nextState.Height);
+            context.ChangeTool(nextState.Tool);
             undoMechanism.Display();
 
+            if (undoMechanism.isNull())
+                redo.IsEnabled = false;
+            undo.IsEnabled = true;
         }
 
-        private void SaveState()
-        {
-            undoMechanism.Add(new Memento(prevCount, paintArea.Children.Count, getRange(prevCount)));
-            undoMechanism.Display();
-        }
+
 
 
         private void Undo()
@@ -117,35 +154,53 @@ namespace InternetCrawlerGUI.Pages
             Memento prevState = undoMechanism.Get();
             undoMechanism.MoveCursorDown();
             paintArea.Children.RemoveRange(prevState.Start, prevState.Items.Length);
-
+            setCanvasSize(prevState.Width, prevState.Height);
+            context.ChangeTool(prevState.Tool);
             undoMechanism.Display();
+
+            // If there is no more moves to undo
+            if (undoMechanism.IsEmpty)
+                undo.IsEnabled = false;
+            redo.IsEnabled = true;
         }
 
-        private UIElement[] getRange(int start)
+
+        private void setCanvasSize(double width, double height)
         {
-            int size = paintArea.Children.Count - start;
-            UIElement[] items = new UIElement[size];
-            for (int i = 0; i < size; i++)
-                items[i] = paintArea.Children[start + i];
-
-            return items;
+            Console.WriteLine("Resized from {0}x{1} to {2}x{3}", canvasColumn.Width.Value, canvasRow.Height.Value, width, height);
+            canvasColumn.Width = new GridLength(width);
+            canvasRow.Height = new GridLength(height);
         }
 
+        #endregion
 
-
-
+        #region Tools       
         private void InitializeToolOptions()
         {
             context.ToolOptions.Add(colorOption);
             context.ToolOptions.Add(thicknessOption);
         }
 
+        private void loadTools()
+        {
+            toolsPanel.Children.Clear();
+            foreach (var item in toolsContainer.GetButtons(context))
+                toolsPanel.Children.Add(item);
+        }
+        #endregion
+
         #region Events handlers
 
-
         int prevCount = 0;
+        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (context.Tool == null)
+                return;
 
-        private void Canvas_MouseDown_1(object sender, System.Windows.Input.MouseButtonEventArgs e)
+            SaveState();
+        }
+
+        private void Canvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (context.Tool == null)
                 return;
@@ -155,7 +210,7 @@ namespace InternetCrawlerGUI.Pages
         }
 
 
-        private void Canvas_MouseMove_1(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Canvas_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (context.Tool == null)
                 return;
@@ -190,6 +245,23 @@ namespace InternetCrawlerGUI.Pages
             count = (count + 1) % 2;
         }
         #endregion
+
+        private void save_Click(object sender, RoutedEventArgs e)
+        {
+
+            // Create OpenFileDialog 
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".png";
+            dlg.Filter = "PNG Files (*.png)|*.png";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result.HasValue && result.Value)
+                CanvasRenderer.SaveToPNG(paintArea, dlg.FileName);
+        }
+
 
 
     }

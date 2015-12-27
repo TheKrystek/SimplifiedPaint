@@ -48,7 +48,29 @@ namespace SimplifiedPaint
         }
 
 
-        
+        public void clearRange(int start, int end) {
+            if (start >= maxSize || end > maxSize)
+                return;
+
+            for (int i = start; i < end; i++)
+                array[i] = default(T);
+        }
+
+        public void clearRange()
+        {
+            clearRange(position+1, maxSize);
+        }
+
+        public bool isNull(int index)
+        {
+            return (index >= maxSize || array[index] == null);
+        }
+
+        public bool isNull()
+        {
+            return isNull(position + 1);
+        }
+
 
         public T GetAt(int index)
         {
@@ -69,7 +91,7 @@ namespace SimplifiedPaint
         {
             for (int i = 0; i < maxSize; i++)
             {
-                Console.WriteLine("{2}{0}  {1}", i, array[i],(i == position) ? ">" : " ");
+                Console.WriteLine("{2}{0}  {1}", i, array[i], (i == position) ? ">" : " ");
             }
         }
 
@@ -86,5 +108,18 @@ namespace SimplifiedPaint
             get { return position == -1; }
         }
 
+        public int MaxSize
+        {
+            get
+            {
+                return maxSize;
+            }
+        }
+
+        internal void Clear()
+        {
+            position = -1;
+            clearRange(0,maxSize);
+        }
     }
 }
