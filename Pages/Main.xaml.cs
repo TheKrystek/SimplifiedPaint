@@ -1,5 +1,6 @@
 ﻿using FirstFloor.ModernUI.Windows.Controls;
 using SimplifiedPaint;
+using SimplifiedPaint.Pages;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -30,8 +31,8 @@ namespace InternetCrawlerGUI.Pages
         SlidingWindowList<Memento> undoMechanism = new SlidingWindowList<Memento>();
         Context context;
         ToolsContainer toolsContainer = new ToolsContainer();
-        string filePath = "image.png";
-        bool saved = true;
+        string filePath = "";
+        bool? saved = null;
         #endregion
 
 
@@ -46,46 +47,26 @@ namespace InternetCrawlerGUI.Pages
 
             // Assign paintArea to context
             context.Canvas = paintArea;
-            context.Status = currentTool;
+            context.OnStatusChange += setStatus;
+            context.ClearTool();
 
             // Set default colorpickers values
             foreColorPicker.SelectedColor = Colors.Black;
             backColorPicker.SelectedColor = Colors.White;
 
-            addUndoRedoButtons();
-
-            discard.Click += Clear_Click;
-
             // Set up event handlers
             paintArea.MouseDown += Canvas_MouseDown;
             paintArea.MouseMove += Canvas_MouseMove;
             paintArea.MouseUp += Canvas_MouseUp;
+            Application.Current.MainWindow.Closing += onClosing;
+
+            addUndoRedoButtons();
+            resizeCanvas(400, 400);
         }
 
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            var dlg = new ModernDialog
-            {
-                Title = LocalizationProvider.GetLocalizedValue<string>("AppDiscardMessageTitle"),
-                Content = new TextBlock()
-                {
-                    Text = LocalizationProvider.GetLocalizedValue<string>("AppDiscardMessage")
-                }
-            };
-            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
-            dlg.ShowDialog();
 
-            if (dlg.DialogResult.HasValue && dlg.DialogResult.Value)
-            {
-                paintArea.Children.Clear();
-                saved = true;
-                undo.IsEnabled = false;
-                redo.IsEnabled = false;
-                undoMechanism.Clear();
-            }
-        }
 
-        #region Undo/Redo mechanism    
+        #region Undo/Redo mechanism and other buttons from upperPanel  
 
         /// <summary>
         /// Setup Undo and Redo buttons and add them to panel
@@ -118,11 +99,10 @@ namespace InternetCrawlerGUI.Pages
             var memento = new Memento(prevCount, paintArea.Children.Count, UIHelpers.GetRange(paintArea, prevCount));
             memento.setCanvasSize(paintArea.ActualWidth, paintArea.ActualHeight);
             memento.Tool = context.Tool;
-
             undoMechanism.Add(memento);
-            undoMechanism.Display();
 
             saved = false;
+            setStatus();
         }
 
         private void Redo()
@@ -139,17 +119,13 @@ namespace InternetCrawlerGUI.Pages
                     paintArea.Children.Add(item);
                 }
 
-            setCanvasSize(nextState.Width, nextState.Height);
+            resizeCanvas(nextState.Width, nextState.Height);
             context.ChangeTool(nextState.Tool);
-            undoMechanism.Display();
 
             if (undoMechanism.isNull())
                 redo.IsEnabled = false;
             undo.IsEnabled = true;
         }
-
-
-
 
         private void Undo()
         {
@@ -159,9 +135,8 @@ namespace InternetCrawlerGUI.Pages
             Memento prevState = undoMechanism.Get();
             undoMechanism.MoveCursorDown();
             paintArea.Children.RemoveRange(prevState.Start, prevState.Items.Length);
-            setCanvasSize(prevState.Width, prevState.Height);
+            resizeCanvas(prevState.Width, prevState.Height);
             context.ChangeTool(prevState.Tool);
-            undoMechanism.Display();
 
             // If there is no more moves to undo
             if (undoMechanism.IsEmpty)
@@ -170,13 +145,95 @@ namespace InternetCrawlerGUI.Pages
         }
 
 
-        private void setCanvasSize(double width, double height)
+        private void resizeCanvas(double width, double height)
         {
             Console.WriteLine("Resized from {0}x{1} to {2}x{3}", canvasColumn.Width.Value, canvasRow.Height.Value, width, height);
             canvasColumn.Width = new GridLength(width);
             canvasRow.Height = new GridLength(height);
+            setStatus();
         }
 
+        private void discardChanges(object sender, RoutedEventArgs e)
+        {
+            // Show dialog and ask if user really wants to discard all changes
+            var dlg = new ModernDialog
+            {
+                Title = LocalizationProvider.GetLocalizedValue<string>("AppDiscardMessageTitle"),
+                Content = new TextBlock()
+                {
+                    Text = LocalizationProvider.GetLocalizedValue<string>("AppDiscardMessage")
+                }
+            };
+            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
+            dlg.ShowDialog();
+
+            if (dlg.DialogResult.HasValue && dlg.DialogResult.Value)
+                clear();
+        }
+
+        private void clear()
+        {
+            paintArea.Children.Clear();
+            paintArea.Background = Brushes.White;
+
+            saved = null;
+            prevCount = 0;
+
+            undoMechanism.Clear();
+            undo.IsEnabled = false;
+            redo.IsEnabled = false;
+            context.ClearTool();
+
+            setStatus();
+        }
+
+        private void saveImage(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".png";
+            dlg.Filter = "PNG Files (*.png)|*.png";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result.HasValue && result.Value)
+            {
+                saved = true;
+                filePath = dlg.FileName;
+                ImageHelper.SaveToPNG(paintArea, filePath);
+                setStatus();
+            }
+        }
+
+        private void openImage(object sender, RoutedEventArgs e)
+        {
+            // First of all check if there are unsaved changes
+            checkForUnsavedChanges();
+
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".png";
+            dlg.Filter = "PNG Files (*.png)|*.png";
+
+
+            bool? result = dlg.ShowDialog();
+
+            if (!result.HasValue || !result.Value)
+                return;
+
+            clear();
+            filePath = dlg.FileName;
+            // Create brush from file and resize canvas to proper dimension
+            paintArea.Background = ImageHelper.LoadFromFile(dlg.FileName);
+            System.Drawing.Bitmap img = ImageHelper.GetImageInfo(dlg.FileName);
+            resizeCanvas(img.Width, img.Height);
+            saved = true;
+            setStatus();
+        }
         #endregion
 
         #region Tools       
@@ -249,53 +306,20 @@ namespace InternetCrawlerGUI.Pages
                 loadTools();
             count = (count + 1) % 2;
         }
+
+        private void onClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            checkForUnsavedChanges();
+        }
         #endregion
 
-        private void save_Click(object sender, RoutedEventArgs e)
-        {
-            // Create OpenFileDialog 
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-
-            // Set filter for file extension and default file extension 
-            dlg.DefaultExt = ".png";
-            dlg.Filter = "PNG Files (*.png)|*.png";
-
-            bool? result = dlg.ShowDialog();
-
-            if (result.HasValue && result.Value)
-            {
-                saved = true;
-                CanvasRenderer.SaveToPNG(paintArea, dlg.FileName);
-            }
-        }
-
-
-        private void open_Click(object sender, RoutedEventArgs e)
+        #region Dialogs 
+        private void checkForUnsavedChanges()
         {
             // First of all check if there are unsaved changes
-            if (!saved) {
-                if (askForSave() == FileDialogResults.ok)
-                    save_Click(sender, null);
-                else
-                    saved = true;
-            }
-
-            // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-            // Set filter for file extension and default file extension 
-            dlg.DefaultExt = ".png";
-            dlg.Filter = "PNG Files (*.png)|*.png";
-            dlg.FileName = filePath;
-
-            bool? result = dlg.ShowDialog();
-
-            if (result.HasValue && result.Value)
-                paintArea.Background = CanvasRenderer.LoadFromFile(dlg.FileName);
-
+            if (saved.HasValue && !saved.Value && askForSave() == FileDialogResults.yes)
+                saveImage(null, null);
         }
-
-
 
         private FileDialogResults askForSave()
         {
@@ -307,19 +331,52 @@ namespace InternetCrawlerGUI.Pages
                     Text = LocalizationProvider.GetLocalizedValue<string>("AppSaveFileQuestion")
                 }
             };
-            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton,};
-            
+            dlg.Buttons = new Button[] { dlg.YesButton, dlg.NoButton, };
+            dlg.ShowDialog();
 
             if (dlg.DialogResult.HasValue)
                 if (dlg.DialogResult.Value)
-                    return FileDialogResults.ok;
-            return FileDialogResults.cancel;
+                    return FileDialogResults.yes;
+            return FileDialogResults.no;
         }
 
+        public void setStatus()
+        {
+            string formatCurrentTool = LocalizationProvider.GetLocalizedValue<string>("CanvasCurrnetTool");
+            string formatCanvasSize = LocalizationProvider.GetLocalizedValue<string>("CanvasSize");
+
+            if (context.Tool != null)
+                statusCurrentTool.Text = string.Format(formatCurrentTool, context.Tool.ToString());
+            else
+                statusCurrentTool.Text = "";
+
+            statusCanvasSize.Text = string.Format(formatCanvasSize, canvasColumn.Width, canvasRow.Height);
+            if (saved.HasValue)
+                statusSaved.Text = LocalizationProvider.GetLocalizedValue<string>(saved.Value ? "CanvasIsSaved" : "CanvasIsUnsaved");
+            else
+                statusSaved.Text = LocalizationProvider.GetLocalizedValue<string>("CanvasIsNew");
+        }
+
+        private void canvasResized(object sender, SizeChangedEventArgs e)
+        {
+            setStatus();
+        }
+
+        private void openResizeDialog(object sender, RoutedEventArgs e)
+        {
+            ChangeSize dlg = new ChangeSize(canvasColumn.Width.Value, canvasRow.Height.Value);
+            dlg.ShowDialog();
+
+            resizeCanvas(dlg.NewWidth, dlg.NewHeight);
+        }
+        #endregion
 
 
-        enum FileDialogResults {
+        enum FileDialogResults
+        {
             yes, no, cancel, ok
         }
+
+     
     }
 }

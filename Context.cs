@@ -19,7 +19,8 @@ namespace SimplifiedPaint
         double strokeThickness;
         Canvas canvas;
         IAbstractTool tool;
-        TextBlock status;
+        public delegate void StatusChange();
+        StatusChange onStatusChange;
 
         List<Panel> toolOptions = new List<Panel>();
 
@@ -42,7 +43,7 @@ namespace SimplifiedPaint
         public void ChangeTool(IAbstractTool newTool)
         {
             // Load tool only once
-            if (tool != null && tool.GetType() == newTool.GetType())
+            if (tool != null && (tool.GetType() == newTool.GetType()))
                 return;
 
             // Change tool
@@ -54,7 +55,17 @@ namespace SimplifiedPaint
             foreach (var option in tool.GetToolOptions())
                 showToolOption(option.ToString());
 
-            Status.Text = tool.ToString();
+            onStatusChangeAction();
+        }
+
+        public void ClearTool()
+        {
+            // Change tool to null
+            tool = null;
+
+            // Hide all options and show only those which are required by newTool
+            hideAllOptions();
+            onStatusChangeAction();
         }
 
 
@@ -179,17 +190,24 @@ namespace SimplifiedPaint
             }
         }
 
-        public TextBlock Status
+        public StatusChange OnStatusChange
         {
             get
             {
-                return status;
+                return onStatusChange;
             }
 
             set
             {
-                status = value;
+                onStatusChange = value;
             }
         }
+
+        protected void onStatusChangeAction()
+        {
+            if (onStatusChange != null)
+                onStatusChange();
+        }
+
     }
 }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="AppDiscard" xml:space="preserve">
     <value>Discard</value>
   </data>
@@ -135,6 +138,9 @@
   <data name="AppNone" xml:space="preserve">
     <value>none</value>
   </data>
+  <data name="AppOk" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="AppOpen" xml:space="preserve">
     <value>Open...</value>
   </data>
@@ -143,6 +149,24 @@
   </data>
   <data name="AppRedo" xml:space="preserve">
     <value>Redo</value>
+  </data>
+  <data name="AppResize" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="AppResizeDescription" xml:space="preserve">
+    <value>Change canvas size</value>
+  </data>
+  <data name="AppResizeHeight" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="AppResizeLock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="AppResizeLockDescription" xml:space="preserve">
+    <value>Lock the proportions between width and height</value>
+  </data>
+  <data name="AppResizeWidth" xml:space="preserve">
+    <value>Width</value>
   </data>
   <data name="AppSave" xml:space="preserve">
     <value>Save</value>
@@ -169,13 +193,25 @@
     <value>Changes foreground or background color of the current tool</value>
   </data>
   <data name="CanvasCurrnetTool" xml:space="preserve">
-    <value>Current tool</value>
+    <value>Current tool: {0}</value>
+  </data>
+  <data name="CanvasIsNew" xml:space="preserve">
+    <value>New image</value>
+  </data>
+  <data name="CanvasIsSaved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="CanvasIsUnsaved" xml:space="preserve">
+    <value>Unsaved</value>
   </data>
   <data name="CanvasResizeHorizontal" xml:space="preserve">
-    <value>tes</value>
+    <value>Drag to chagne height</value>
   </data>
   <data name="CanvasResizeVertical" xml:space="preserve">
-    <value>test</value>
+    <value>Drag to chagne width</value>
+  </data>
+  <data name="CanvasSize" xml:space="preserve">
+    <value>Canvas size: {0}x{1}</value>
   </data>
   <data name="CanvasThicknessDescription" xml:space="preserve">
     <value>Changes thickness of the current tool</value>

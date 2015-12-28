@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ using System.Windows.Media.Imaging;
 
 namespace SimplifiedPaint
 {
-    class CanvasRenderer
+    class ImageHelper
     {
 
         public static void SaveToPNG(Canvas canvas, string filePath = "canvas.png")
@@ -36,6 +38,14 @@ namespace SimplifiedPaint
             brush.ImageSource = new BitmapImage(new Uri(filePath, UriKind.RelativeOrAbsolute));
             return brush;
         }
+
+
+        public static Bitmap GetImageInfo(string filePath) {
+            if (!new FileInfo(filePath).Exists)
+                return null;
+            return new Bitmap(filePath);
+        }
+            
     }
 
 }

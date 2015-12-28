@@ -11,20 +11,22 @@
         lex:ResxLocalizationProvider.DefaultAssembly="SimplifiedPaint"
         lex:ResxLocalizationProvider.DefaultDictionary="Resources"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded" >
 
     <DockPanel LastChildFill="True">
-        <WrapPanel DockPanel.Dock="Top" Name="upperPanel" Margin="0,0,0,5">
-            <Button Name="undo" />
-            <Button Name="redo" />
-            <Button Name="discard" Content="{lex:Loc AppDiscard}" ToolTip="{lex:Loc AppDiscardDescription}"/>
-            <Button Name="resize" Content="{lex:Loc AppDiscard}" ToolTip="{lex:Loc AppDiscardDescription}"/>
-            <Button Name="save" Content="{lex:Loc AppSave}" ToolTip="{lex:Loc AppSaveDescription}" Click="save_Click"/>
-            <Button Name="open" Content="{lex:Loc AppOpen}" ToolTip="{lex:Loc AppOpenDescription}" Click="open_Click"/>
+        <WrapPanel DockPanel.Dock="Top" Name="upperPanel" Margin="0,0,0,5" >
+            <Button Name="undo" Margin="0,0,4,0"/>
+            <Button Name="redo" Margin="0,0,4,0"/>
+            <Button Name="discard" Margin="0,0,4,0" Content="{lex:Loc AppDiscard}" ToolTip="{lex:Loc AppDiscardDescription}" Click="discardChanges"/>
+            <Button Name="resize"  Margin="0,0,4,0" Content="{lex:Loc AppResize}" ToolTip="{lex:Loc AppResizeDescription}" Click="openResizeDialog"/>
+            <Button Name="save"  Margin="0,0,4,0" Content="{lex:Loc AppSave}" ToolTip="{lex:Loc AppSaveDescription}" Click="saveImage"/>
+            <Button Name="open"  Margin="0,0,4,0" Content="{lex:Loc AppOpen}" ToolTip="{lex:Loc AppOpenDescription}" Click="openImage"/>
 
         </WrapPanel>
         <WrapPanel DockPanel.Dock="Bottom"  Margin="-40,0,-30,-15" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <TextBlock Name="currentTool" Text="{lex:Loc AppNone}" ToolTip="{lex:Loc CanvasCurrnetTool}"/>
+            <TextBlock Name="statusCurrentTool" Text="" Margin="0,0,4,0"/>
+            <TextBlock Name="statusCanvasSize" Text="" Margin="0,0,4,0"/>
+            <TextBlock Name="statusSaved" Text="" Margin="0,0,4,0"/>
         </WrapPanel>
         <Border DockPanel.Dock="Left" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource BorderColorBrush}" >
             <Grid Name="leftPanel" Margin="0,0,5,0">
@@ -72,7 +74,7 @@
             </Grid>
         </Border>
 
-   
+
 
         <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
             <Grid  >
@@ -87,7 +89,7 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Grid.Row="0" Background="{DynamicResource BorderColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Canvas  Background="#ffffff" Name="paintArea" ClipToBounds="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Canvas  Background="#ffffff" Name="paintArea" ClipToBounds="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SizeChanged="canvasResized">
 
                     </Canvas>
                 </Border>

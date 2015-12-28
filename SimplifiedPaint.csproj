@@ -152,6 +152,9 @@
     <Compile Include="IAbstractTool.cs" />
     <Compile Include="IconButtonBuilder.cs" />
     <Compile Include="LocalizationProvider.cs" />
+    <Compile Include="Pages\ChangeSize.xaml.cs">
+      <DependentUpon>ChangeSize.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PluginModel.cs" />
     <Compile Include="IToolPlugin.cs" />
     <Compile Include="Options.cs" />
@@ -195,6 +198,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\ChangeSize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

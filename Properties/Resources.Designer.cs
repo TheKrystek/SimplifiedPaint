@@ -61,6 +61,15 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string AppCancel {
+            get {
+                return ResourceManager.GetString("AppCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Discard.
         /// </summary>
         internal static string AppDiscard {
@@ -115,6 +124,15 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string AppOk {
+            get {
+                return ResourceManager.GetString("AppOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open....
         /// </summary>
         internal static string AppOpen {
@@ -138,6 +156,60 @@ namespace SimplifiedPaint.Properties {
         internal static string AppRedo {
             get {
                 return ResourceManager.GetString("AppRedo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resize.
+        /// </summary>
+        internal static string AppResize {
+            get {
+                return ResourceManager.GetString("AppResize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change canvas size.
+        /// </summary>
+        internal static string AppResizeDescription {
+            get {
+                return ResourceManager.GetString("AppResizeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        internal static string AppResizeHeight {
+            get {
+                return ResourceManager.GetString("AppResizeHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lock.
+        /// </summary>
+        internal static string AppResizeLock {
+            get {
+                return ResourceManager.GetString("AppResizeLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lock the proportions between width and height.
+        /// </summary>
+        internal static string AppResizeLockDescription {
+            get {
+                return ResourceManager.GetString("AppResizeLockDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width.
+        /// </summary>
+        internal static string AppResizeWidth {
+            get {
+                return ResourceManager.GetString("AppResizeWidth", resourceCulture);
             }
         }
         
@@ -214,7 +286,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current tool.
+        ///   Looks up a localized string similar to Current tool: {0}.
         /// </summary>
         internal static string CanvasCurrnetTool {
             get {
@@ -223,7 +295,34 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tes.
+        ///   Looks up a localized string similar to New image.
+        /// </summary>
+        internal static string CanvasIsNew {
+            get {
+                return ResourceManager.GetString("CanvasIsNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved.
+        /// </summary>
+        internal static string CanvasIsSaved {
+            get {
+                return ResourceManager.GetString("CanvasIsSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsaved.
+        /// </summary>
+        internal static string CanvasIsUnsaved {
+            get {
+                return ResourceManager.GetString("CanvasIsUnsaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag to chagne height.
         /// </summary>
         internal static string CanvasResizeHorizontal {
             get {
@@ -232,11 +331,20 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to test.
+        ///   Looks up a localized string similar to Drag to chagne width.
         /// </summary>
         internal static string CanvasResizeVertical {
             get {
                 return ResourceManager.GetString("CanvasResizeVertical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Canvas size: {0}x{1}.
+        /// </summary>
+        internal static string CanvasSize {
+            get {
+                return ResourceManager.GetString("CanvasSize", resourceCulture);
             }
         }
         
