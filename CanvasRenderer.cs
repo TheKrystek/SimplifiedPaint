@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,7 +36,17 @@ namespace SimplifiedPaint
 
         public static ImageBrush LoadFromFile(string filePath) {
             ImageBrush brush = new ImageBrush();
-            brush.ImageSource = new BitmapImage(new Uri(filePath, UriKind.RelativeOrAbsolute));
+
+            // Enforce no cache policy 
+            BitmapImage bmi = new BitmapImage();
+            bmi.BeginInit();
+            bmi.UriSource = new Uri(filePath);
+            bmi.CacheOption = BitmapCacheOption.None;
+            bmi.UriCachePolicy = new RequestCachePolicy(RequestCacheLevel.BypassCache);
+            bmi.CacheOption = BitmapCacheOption.OnLoad;
+            bmi.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            bmi.EndInit();
+            brush.ImageSource = bmi;
             return brush;
         }
 

@@ -7,22 +7,18 @@
         lex:ResxLocalizationProvider.DefaultAssembly="SimplifiedPaint"
         lex:ResxLocalizationProvider.DefaultDictionary="Resources"
         Title="SimplifiedPaint" 
-        Icon="Resources/logo.ico"
+LogoData="M18,4V3A1,1 0 0,0 17,2H5A1,1 0 0,0 4,3V7A1,1 0 0,0 5,8H17A1,1 0 0,0 18,7V6H19V10H9V21A1,1 0 0,0 10,22H12A1,1 0 0,0 13,21V12H21V4H18Z"
         WindowStartupLocation="CenterScreen"
                   ContentSource="/Pages/Main.xaml"   >
     <mui:ModernWindow.TitleLinks>
-
-        <mui:Link DisplayName="help" Source="http://mui.codeplex.com" />
+        <mui:Link DisplayName="{lex:LocTextUpper GitHub}" Source="https://github.com/TheKrystek/SimplifiedPaint" />
     </mui:ModernWindow.TitleLinks>
-
     <mui:ModernWindow.MenuLinkGroups>
-        <mui:LinkGroup DisplayName="{lex:Loc AppTitle}" >
+        <mui:LinkGroup DisplayName="{lex:LocTextUpper AppTitle}" >
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="Steps" Source="/Pages/Main.xaml" />
-                <mui:Link DisplayName="settings" Source="/Pages/SettingsPage.xaml" />
+                <mui:Link DisplayName="{lex:Loc MainPageName}" Source="/Pages/Main.xaml" />
+                <mui:Link DisplayName="{lex:Loc SettingsPageName}" Source="/Pages/SettingsPage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>
-
-
 </mui:ModernWindow>

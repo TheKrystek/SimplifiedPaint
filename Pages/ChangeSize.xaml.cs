@@ -24,7 +24,7 @@ namespace SimplifiedPaint.Pages
       
         double currentWidth, currentHeight, proportions, newWidth, newHeight;
 
-        public  double NewWidth
+        public double NewWidth
         {
             get
             {
@@ -33,7 +33,7 @@ namespace SimplifiedPaint.Pages
 
             set
             {
-                newWidth = value;
+                newWidth = Math.Round(value);
             }
         }
 
@@ -46,7 +46,8 @@ namespace SimplifiedPaint.Pages
 
             set
             {
-                newHeight = value;
+
+                newHeight = Math.Round(value);
             }
         }
 
@@ -70,11 +71,11 @@ namespace SimplifiedPaint.Pages
         {
             if (e.Key == Key.Enter)
             {
-                newWidth = getValue(widthTextBox);
+                NewWidth = getValue(widthTextBox);
                 if (locked.IsChecked.HasValue && locked.IsChecked.Value)
                 {
-                    newHeight = newWidth / proportions;
-                    heightTextBox.Text = newHeight.ToString();
+                    NewHeight = NewWidth / proportions;
+                    heightTextBox.Text = NewHeight.ToString();
                 }
             }
         }
@@ -82,11 +83,11 @@ namespace SimplifiedPaint.Pages
         private void heightTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter ) {
-                newHeight = getValue(heightTextBox);
+                NewHeight = getValue(heightTextBox);
                 if (locked.IsChecked.HasValue && locked.IsChecked.Value)
                 {
-                    newWidth = newHeight * proportions;
-                    widthTextBox.Text = newWidth.ToString();
+                    NewWidth = NewHeight * proportions;
+                    widthTextBox.Text = NewWidth.ToString();
                 }
             }
         }
@@ -100,8 +101,8 @@ namespace SimplifiedPaint.Pages
                 Content = LocalizationProvider.GetLocalizedValue<string>("AppCancel")              
             };
             closeButton.Click += (s, e) => {
-                newHeight = currentHeight;
-                newWidth = currentWidth;
+                NewHeight = currentHeight;
+                NewWidth = currentWidth;
                 Close();
             };
 
@@ -120,8 +121,8 @@ namespace SimplifiedPaint.Pages
         {
             currentHeight = height;
             currentWidth = width;
-            newHeight = height;
-            newWidth = width;
+            NewHeight = height;
+            NewWidth = width;
 
 
             widthTextBox.Text = width.ToString();

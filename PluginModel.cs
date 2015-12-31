@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimplifiedPaintCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,14 +43,11 @@ namespace SimplifiedPaint
 
             set
             {
-
-
                 // Add or remove current plugin form list of enabled plugins
                 if (value)
                     Properties.Settings.Default.EnabledPlugins.Add(Name);
                 else
                     Properties.Settings.Default.EnabledPlugins.Remove(Name);
-
                 enabled = value;
             }
         }

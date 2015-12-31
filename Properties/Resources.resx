@@ -124,7 +124,7 @@
     <value>Discard</value>
   </data>
   <data name="AppDiscardDescription" xml:space="preserve">
-    <value>Discard all changes</value>
+    <value>Discard all changes (Ctrl + D)</value>
   </data>
   <data name="AppDiscardMessage" xml:space="preserve">
     <value>Do you want to discard all changes? It'll be not possible to restore them again.</value>
@@ -145,13 +145,13 @@
     <value>Open...</value>
   </data>
   <data name="AppOpenDescription" xml:space="preserve">
-    <value>Open image</value>
+    <value>Open image (Ctrl + O)</value>
   </data>
   <data name="AppRedo" xml:space="preserve">
-    <value>Redo</value>
+    <value>Redo (Ctrl + Y)</value>
   </data>
   <data name="AppResize" xml:space="preserve">
-    <value>Resize</value>
+    <value>Resize image (Ctrl + R)</value>
   </data>
   <data name="AppResizeDescription" xml:space="preserve">
     <value>Change canvas size</value>
@@ -172,7 +172,7 @@
     <value>Save</value>
   </data>
   <data name="AppSaveDescription" xml:space="preserve">
-    <value>Save image as PNG file</value>
+    <value>Save image as PNG file (Ctrl + S)</value>
   </data>
   <data name="AppSaveFileOverwrite" xml:space="preserve">
     <value>File with the given name already exists. Do you want to overwrite it?</value>
@@ -184,10 +184,10 @@
     <value>Save</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>SimpliefiedPaint</value>
+    <value>Simpliefied Paint</value>
   </data>
   <data name="AppUndo" xml:space="preserve">
-    <value>Undo</value>
+    <value>Undo (Ctrl + Z)</value>
   </data>
   <data name="CanvasColorPickerDescription" xml:space="preserve">
     <value>Changes foreground or background color of the current tool</value>
@@ -216,8 +216,11 @@
   <data name="CanvasThicknessDescription" xml:space="preserve">
     <value>Changes thickness of the current tool</value>
   </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>github</value>
+  </data>
   <data name="MainPageName" xml:space="preserve">
-    <value />
+    <value>Paint</value>
   </data>
   <data name="PluginsAuthor" xml:space="preserve">
     <value>Author</value>

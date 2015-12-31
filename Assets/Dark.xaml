@@ -11,11 +11,20 @@
     <Color x:Key="BackgroundColor">#232323</Color>
     <Color x:Key="BorderColor">#cccccc</Color>
     <Color x:Key="AccentColor">#00ABA9</Color>
+    <Color x:Key="AccentColor70">#B200ABA9</Color>
+    <Color x:Key="AccentColor50">#8000ABA9</Color>
+    <Color x:Key="AccentColor30">#5000ABA9</Color>
 
     <SolidColorBrush x:Key="AccentColorBrush" Color="{DynamicResource AccentColor}"/>
+    <SolidColorBrush x:Key="AccentColorBrush70" Color="{DynamicResource AccentColor70}"/>
+    <SolidColorBrush x:Key="AccentColorBrush50" Color="{DynamicResource AccentColor50}"/>
+    <SolidColorBrush x:Key="AccentColorBrush30" Color="{DynamicResource AccentColor30}"/>
     <SolidColorBrush x:Key="BorderColorBrush" Color="{DynamicResource BorderColor}"/>
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="{DynamicResource BacgroundColor}"/>
 
+    
+    
+    
     <!-- custom theme resources-->
     <Rectangle x:Key="WindowBackgroundContent" x:Shared="false">
         <Rectangle.Fill>

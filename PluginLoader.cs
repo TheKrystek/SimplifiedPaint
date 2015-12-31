@@ -1,13 +1,10 @@
-﻿using System;
+﻿using SimplifiedPaintCore;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using WPFLocalizeExtension.Engine;
 
 namespace SimplifiedPaint
 {
@@ -30,12 +27,21 @@ namespace SimplifiedPaint
 
         private void loadLibraries()
         {
+
             DirectoryInfo d = new DirectoryInfo(pluginPath);
             if (!d.Exists)
                 return;
 
-            foreach (var file in d.GetFiles("*.dll"))
-                loadLibrary(file.FullName);
+            try
+            {
+                foreach (var file in d.GetFiles("*.dll"))
+                    loadLibrary(file.FullName);
+            }
+            catch (Exception)
+            {
+                Debug.Print("No plugins found");
+            }
+           
         }
 
         private void loadLibrary(string path)

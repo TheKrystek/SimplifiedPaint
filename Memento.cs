@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using SimplifiedPaintCore;
+using System.Windows;
 
 namespace SimplifiedPaint
 {

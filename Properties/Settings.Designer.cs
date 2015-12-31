@@ -93,5 +93,17 @@ namespace SimplifiedPaint.Properties {
                 this["EnabledPlugins"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int Delay {
+            get {
+                return ((int)(this["Delay"]));
+            }
+            set {
+                this["Delay"] = value;
+            }
+        }
     }
 }

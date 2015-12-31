@@ -12,7 +12,6 @@ namespace SimplifiedPaint
         int maxSize;
         T[] array;
 
-
         public SlidingWindowList(int size = 5)
         {
             maxSize = size;

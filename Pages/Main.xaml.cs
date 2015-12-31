@@ -1,11 +1,14 @@
 ﻿using FirstFloor.ModernUI.Windows.Controls;
 using SimplifiedPaint;
+using SimplifiedPaintCore;
 using SimplifiedPaint.Pages;
+using SimplifiedPaint.Properties;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +17,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -28,13 +32,12 @@ namespace InternetCrawlerGUI.Pages
     {
 
         #region Fields
-        SlidingWindowList<Memento> undoMechanism = new SlidingWindowList<Memento>();
+        SlidingWindowList<Memento> undoMechanism = new SlidingWindowList<Memento>(50);
         Context context;
         ToolsContainer toolsContainer = new ToolsContainer();
         string filePath = "";
-        bool? saved = null;
+        bool? saved;
         #endregion
-
 
         public Main()
         {
@@ -62,9 +65,26 @@ namespace InternetCrawlerGUI.Pages
 
             addUndoRedoButtons();
             resizeCanvas(400, 400);
+            Saved = null;
+
+            addToolsHotKeys();
+            addHotKeys();
         }
 
-
+        private void addToolsHotKeys()
+        {
+            toolsContainer.OnButtonCreated += (button, tool) =>
+            {
+                if (tool.Key.HasValue)
+                {
+                    addHotKey(tool.Key.Value, (s, e) =>
+                    {
+                        context.ChangeTool(tool);
+                        context.SelectedButton = button;
+                    }, ModifierKeys.Alt);
+                }
+            };
+        }
 
         #region Undo/Redo mechanism and other buttons from upperPanel  
 
@@ -75,16 +95,15 @@ namespace InternetCrawlerGUI.Pages
         {
             string toolTip = string.Format(LocalizationProvider.GetLocalizedValue<string>("AppHistorySize"), undoMechanism.MaxSize);
 
-            undo.Content = LocalizationProvider.GetLocalizedValue<string>("AppUndo");
-            undo.Click += (s, e) => Undo();
+            undo.Click += undoHandler;
             undo.IsEnabled = false;
             undo.ToolTip = toolTip;
 
-            redo.Content = LocalizationProvider.GetLocalizedValue<string>("AppRedo");
-            redo.Click += (s, e) => Redo();
+            redo.Click += redoHandler;
             redo.IsEnabled = false;
             redo.ToolTip = toolTip;
         }
+
 
         /// <summary>
         /// Save program state every time users uses paint tools
@@ -101,12 +120,14 @@ namespace InternetCrawlerGUI.Pages
             memento.Tool = context.Tool;
             undoMechanism.Add(memento);
 
-            saved = false;
-            setStatus();
+            Saved = false;
         }
 
         private void Redo()
         {
+            if (!redo.IsEnabled)
+                return;
+
             undoMechanism.MoveCursorUp();
             Memento nextState = undoMechanism.Get();
             if (nextState == null)
@@ -129,7 +150,7 @@ namespace InternetCrawlerGUI.Pages
 
         private void Undo()
         {
-            if (undoMechanism.IsEmpty)
+            if (undoMechanism.IsEmpty || !undo.IsEnabled)
                 return;
 
             Memento prevState = undoMechanism.Get();
@@ -144,6 +165,16 @@ namespace InternetCrawlerGUI.Pages
             redo.IsEnabled = true;
         }
 
+
+        private void redoHandler(object sender, RoutedEventArgs e)
+        {
+            Redo();
+        }
+
+        private void undoHandler(object sender, RoutedEventArgs e)
+        {
+            Undo();
+        }
 
         private void resizeCanvas(double width, double height)
         {
@@ -176,15 +207,13 @@ namespace InternetCrawlerGUI.Pages
             paintArea.Children.Clear();
             paintArea.Background = Brushes.White;
 
-            saved = null;
-            prevCount = 0;
-
             undoMechanism.Clear();
             undo.IsEnabled = false;
             redo.IsEnabled = false;
             context.ClearTool();
 
-            setStatus();
+            Saved = null;
+            prevCount = 0;
         }
 
         private void saveImage(object sender, RoutedEventArgs e)
@@ -200,11 +229,46 @@ namespace InternetCrawlerGUI.Pages
 
             if (result.HasValue && result.Value)
             {
-                saved = true;
+                saveImage(dlg.FileName);
                 filePath = dlg.FileName;
-                ImageHelper.SaveToPNG(paintArea, filePath);
-                setStatus();
             }
+        }
+
+        private void saveImage(string filePath)
+        {
+            resetProgressBar();
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                // Fake delay - just for showcase purposes
+                delayAndUpdateProgress(20);
+                delayAndUpdateProgress(40);
+                delayAndUpdateProgress(60);
+
+                // Save image to file
+                Dispatcher.Invoke(new Action(() => ImageHelper.SaveToPNG(paintArea, filePath)));
+                delayAndUpdateProgress(99);
+                delayAndUpdateProgress(100);
+
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    Saved = true;
+                }));
+            }).Start();
+        }
+
+        private void delayAndUpdateProgress(int progress)
+        {
+            Thread.Sleep(Settings.Default.Delay);
+            Dispatcher.Invoke(new System.Action(() => progressBar.Value = progress));
+        }
+
+        private void saveImageQuiet(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
+                saveImage(sender, e);
+            else
+                saveImage(filePath);
         }
 
         private void openImage(object sender, RoutedEventArgs e)
@@ -231,8 +295,7 @@ namespace InternetCrawlerGUI.Pages
             paintArea.Background = ImageHelper.LoadFromFile(dlg.FileName);
             System.Drawing.Bitmap img = ImageHelper.GetImageInfo(dlg.FileName);
             resizeCanvas(img.Width, img.Height);
-            saved = true;
-            setStatus();
+            Saved = true;
         }
         #endregion
 
@@ -246,8 +309,13 @@ namespace InternetCrawlerGUI.Pages
         private void loadTools()
         {
             toolsPanel.Children.Clear();
+            context.ClearButtons();
             foreach (var item in toolsContainer.GetButtons(context))
+            {
                 toolsPanel.Children.Add(item);
+                context.AddButton(item);
+            }
+            context.UnselectButtons();
         }
         #endregion
 
@@ -259,6 +327,7 @@ namespace InternetCrawlerGUI.Pages
             if (context.Tool == null)
                 return;
 
+            context.Tool.OnMouseUp(e); 
             SaveState();
         }
 
@@ -300,6 +369,23 @@ namespace InternetCrawlerGUI.Pages
         }
 
         int count = 0;
+
+        public bool? Saved
+        {
+            get
+            {
+                return saved;
+            }
+
+            set
+            {
+                saved = value;
+                save.IsEnabled = (value != null);
+                discard.IsEnabled = (value != null);
+                setStatus();
+            }
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (count == 0)
@@ -317,7 +403,7 @@ namespace InternetCrawlerGUI.Pages
         private void checkForUnsavedChanges()
         {
             // First of all check if there are unsaved changes
-            if (saved.HasValue && !saved.Value && askForSave() == FileDialogResults.yes)
+            if (Saved.HasValue && !Saved.Value && askForSave() == FileDialogResults.yes)
                 saveImage(null, null);
         }
 
@@ -351,10 +437,30 @@ namespace InternetCrawlerGUI.Pages
                 statusCurrentTool.Text = "";
 
             statusCanvasSize.Text = string.Format(formatCanvasSize, canvasColumn.Width, canvasRow.Height);
-            if (saved.HasValue)
-                statusSaved.Text = LocalizationProvider.GetLocalizedValue<string>(saved.Value ? "CanvasIsSaved" : "CanvasIsUnsaved");
+            if (Saved.HasValue)
+                statusSaved.Text = LocalizationProvider.GetLocalizedValue<string>(Saved.Value ? "CanvasIsSaved" : "CanvasIsUnsaved");
             else
                 statusSaved.Text = LocalizationProvider.GetLocalizedValue<string>("CanvasIsNew");
+        }
+
+        private void resetProgressBar()
+        {
+            progressBar.Opacity = 1.0;
+            progressBar.Visibility = Visibility.Visible;
+            progressBar.Value = 0;
+
+        }
+
+        private void hideProgressBar()
+        {
+            var animation = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+            };
+
+            progressBar.BeginAnimation(OpacityProperty, animation);
+
         }
 
         private void canvasResized(object sender, SizeChangedEventArgs e)
@@ -369,14 +475,60 @@ namespace InternetCrawlerGUI.Pages
 
             resizeCanvas(dlg.NewWidth, dlg.NewHeight);
         }
-        #endregion
-
-
         enum FileDialogResults
         {
             yes, no, cancel, ok
         }
+        #endregion
 
-     
+
+        private void addHotKeys()
+        {
+            try
+            {
+                // CTRL + S -> Save
+                addHotKey(Key.S, saveImageQuiet);
+
+                // CTRL + Z -> Undo
+                addHotKey(Key.Z, undoHandler);
+
+                // CTRL + Y -> Redo
+                addHotKey(Key.Y, redoHandler);
+
+                // CTRL + O -> Open
+                addHotKey(Key.O, openImage);
+
+                // CTRL + R -> Resize
+                addHotKey(Key.R, openResizeDialog);
+
+                // CTRL + D -> Discard
+                addHotKey(Key.D, discardChanges);
+
+                // CTRL + '+' -> Thickness++
+                addHotKey(Key.OemPlus, (s, e) => { if (thicknessOption.IsVisible) thicknessSlider.Value++; });
+                addHotKey(Key.Add, (s, e) => { if (thicknessOption.IsVisible) thicknessSlider.Value++; });
+
+                // CTRL + '-' -> Thickness--
+                addHotKey(Key.OemMinus, (s, e) => { if (thicknessOption.IsVisible) thicknessSlider.Value--; });
+                addHotKey(Key.Subtract, (s, e) => { if (thicknessOption.IsVisible) thicknessSlider.Value--; });
+
+
+            }
+            catch (Exception e)
+            { }
+        }
+
+        private void addHotKey(Key key, ExecutedRoutedEventHandler handler, ModifierKeys modifier = ModifierKeys.Control)
+        {
+            RoutedCommand command = new RoutedCommand();
+            command.InputGestures.Add(new KeyGesture(key, modifier));
+            CommandBindings.Add(new CommandBinding(command, handler));
+        }
+
+        private void progressBarChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (e.NewValue == 100.0)
+                progressBar.Visibility = Visibility.Hidden;
+        }
     }
 }

@@ -51,20 +51,20 @@ namespace SimplifiedPaint.Pages.Settings
         private string selectedFontSize;
 
         private CultureInfo[] languages = {
-                new CultureInfo("pl"), new CultureInfo("en")};
-    
+                new CultureInfo("en"), new CultureInfo("pl")};
+
         private CultureInfo selectedLanguage;
 
         public AppearanceViewModel()
         {
-          
+
             // add the default themes
             this.themes.Add(new Link { DisplayName = "light", Source = App.LightThemeSource });
             this.themes.Add(new Link { DisplayName = "dark", Source = App.DarkThemeSource });
             this.SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? FontLarge : FontSmall;
 
             // select proper language
-            SelectedLanguage = new CultureInfo("pl");
+            SelectedLanguage = languages.FirstOrDefault(l => l.Name.ToString() == Properties.Settings.Default.Culture);
 
 
             // Accent color has to be set to value choosen by user and written in config
@@ -75,11 +75,11 @@ namespace SimplifiedPaint.Pages.Settings
             AppearanceManager.Current.PropertyChanged += OnAppearanceManagerPropertyChanged;
         }
 
- 
+
 
         private void OnAppearanceManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ThemeSource" )
+            if (e.PropertyName == "ThemeSource")
             {
                 // synchronizes the selected viewmodel theme with the actual theme used by the appearance manager.
                 this.SelectedTheme = this.themes.FirstOrDefault(l => l.Source.Equals(AppearanceManager.Current.ThemeSource));
@@ -153,7 +153,6 @@ namespace SimplifiedPaint.Pages.Settings
                 {
                     this.selectedAccentColor = value;
                     OnPropertyChanged("SelectedAccentColor");
-
                     AppearanceManager.Current.AccentColor = value;
                 }
             }
@@ -176,7 +175,7 @@ namespace SimplifiedPaint.Pages.Settings
                     OnPropertyChanged("SelectedLanguage");
                     LocalizeDictionary.Instance.Culture = value;
                 }
-                
+
             }
         }
 

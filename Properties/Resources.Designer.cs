@@ -79,7 +79,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Discard all changes.
+        ///   Looks up a localized string similar to Discard all changes (Ctrl + D).
         /// </summary>
         internal static string AppDiscardDescription {
             get {
@@ -142,7 +142,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open image.
+        ///   Looks up a localized string similar to Open image (Ctrl + O).
         /// </summary>
         internal static string AppOpenDescription {
             get {
@@ -151,7 +151,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redo.
+        ///   Looks up a localized string similar to Redo (Ctrl + Y).
         /// </summary>
         internal static string AppRedo {
             get {
@@ -160,7 +160,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resize.
+        ///   Looks up a localized string similar to Resize image (Ctrl + R).
         /// </summary>
         internal static string AppResize {
             get {
@@ -223,7 +223,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save image as PNG file.
+        ///   Looks up a localized string similar to Save image as PNG file (Ctrl + S).
         /// </summary>
         internal static string AppSaveDescription {
             get {
@@ -259,7 +259,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SimpliefiedPaint.
+        ///   Looks up a localized string similar to Simpliefied Paint.
         /// </summary>
         internal static string AppTitle {
             get {
@@ -268,7 +268,7 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Undo.
+        ///   Looks up a localized string similar to Undo (Ctrl + Z).
         /// </summary>
         internal static string AppUndo {
             get {
@@ -358,7 +358,16 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to github.
+        /// </summary>
+        internal static string GitHub {
+            get {
+                return ResourceManager.GetString("GitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paint.
         /// </summary>
         internal static string MainPageName {
             get {
