@@ -122,7 +122,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CanvasRenderer.cs" />
+    <Compile Include="ImageHelper.cs" />
     <Compile Include="ColorUtil.cs" />
     <Compile Include="Converters\VisiblityToBool.cs" />
     <Compile Include="Converters\TextNumberConverter.cs" />
@@ -131,8 +131,10 @@
     <Compile Include="Pages\ChangeSize.xaml.cs">
       <DependentUpon>ChangeSize.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EllipseTool.cs" />
-    <Compile Include="RectangleTool.cs" />
+    <Compile Include="Tools\EllipseTool.cs" />
+    <Compile Include="Tools\ColorPickerTool.cs" />
+    <Compile Include="Tools\PolygonTool.cs" />
+    <Compile Include="Tools\RectangleTool.cs" />
     <Compile Include="PluginModel.cs" />
     <Compile Include="Pages\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
@@ -141,7 +143,7 @@
       <DependentUpon>Plugins.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings\RelayCommand.cs" />
-    <Compile Include="PenTool.cs" />
+    <Compile Include="Tools\PenTool.cs" />
     <Compile Include="PluginLoader.cs" />
     <Compile Include="PluginsContainer.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

@@ -64,7 +64,17 @@ namespace SimplifiedPaint
                 action(Context.ForeColorBrush, Context.BackColorBrush, e);
             else
                 action(Context.BackColorBrush, Context.ForeColorBrush, e);
+        }
 
+
+        public void OnUndo()
+        {
+            // no action
+        }
+
+        public void OnRedo()
+        {
+            // no action
         }
         #endregion
 
@@ -84,6 +94,7 @@ namespace SimplifiedPaint
             set
             {
                 context = value;
+                context.Canvas.Cursor = Cursors.Arrow;
             }
         }
         #endregion
@@ -116,7 +127,7 @@ namespace SimplifiedPaint
         {
             get
             {
-                return System.Windows.Input.Key.R;
+                return System.Windows.Input.Key.E;
             }
         }
 

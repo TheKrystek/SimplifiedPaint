@@ -47,6 +47,8 @@ namespace SimplifiedPaint
             tools.Add(new PenTool());
             tools.Add(new RectangleTool());
             tools.Add(new EllipseTool());
+            tools.Add(new PolygonTool());
+            tools.Add(new ColorPickerTool());
 
             getToolsFromPlugins();
         }

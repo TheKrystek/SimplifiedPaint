@@ -56,6 +56,8 @@ namespace InternetCrawlerGUI.Pages
             // Set default colorpickers values
             foreColorPicker.SelectedColor = Colors.Black;
             backColorPicker.SelectedColor = Colors.White;
+            context.OnForeColorChange += color => foreColorPicker.SelectedColor = color;
+            context.OnBackColorChange += color => backColorPicker.SelectedColor = color;
 
             // Set up event handlers
             paintArea.MouseDown += Canvas_MouseDown;
@@ -80,7 +82,6 @@ namespace InternetCrawlerGUI.Pages
                     addHotKey(tool.Key.Value, (s, e) =>
                     {
                         context.ChangeTool(tool);
-                        context.SelectedButton = button;
                     }, ModifierKeys.Alt);
                 }
             };
@@ -115,10 +116,16 @@ namespace InternetCrawlerGUI.Pages
             redo.IsEnabled = false;
 
             undoMechanism.clearRange();
-            var memento = new Memento(prevCount, paintArea.Children.Count, UIHelpers.GetRange(paintArea, prevCount));
-            memento.setCanvasSize(paintArea.ActualWidth, paintArea.ActualHeight);
-            memento.Tool = context.Tool;
-            undoMechanism.Add(memento);
+            try
+            {
+                var memento = new Memento(prevCount, paintArea.Children.Count, UIHelpers.GetRange(paintArea, prevCount));
+                memento.setCanvasSize(paintArea.ActualWidth, paintArea.ActualHeight);
+                memento.Tool = context.Tool;
+                undoMechanism.Add(memento);
+            }
+            catch (Exception)
+            {
+            }
 
             Saved = false;
         }
@@ -127,6 +134,8 @@ namespace InternetCrawlerGUI.Pages
         {
             if (!redo.IsEnabled)
                 return;
+
+            context.Tool.OnRedo();
 
             undoMechanism.MoveCursorUp();
             Memento nextState = undoMechanism.Get();
@@ -143,6 +152,7 @@ namespace InternetCrawlerGUI.Pages
             resizeCanvas(nextState.Width, nextState.Height);
             context.ChangeTool(nextState.Tool);
 
+
             if (undoMechanism.isNull())
                 redo.IsEnabled = false;
             undo.IsEnabled = true;
@@ -152,6 +162,8 @@ namespace InternetCrawlerGUI.Pages
         {
             if (undoMechanism.IsEmpty || !undo.IsEnabled)
                 return;
+
+            context.Tool.OnUndo();
 
             Memento prevState = undoMechanism.Get();
             undoMechanism.MoveCursorDown();
@@ -327,7 +339,8 @@ namespace InternetCrawlerGUI.Pages
             if (context.Tool == null)
                 return;
 
-            context.Tool.OnMouseUp(e); 
+            context.Tool.OnMouseUp(e);
+
             SaveState();
         }
 
@@ -337,7 +350,8 @@ namespace InternetCrawlerGUI.Pages
                 return;
 
             context.Tool.OnMouseDown(e);
-            prevCount = paintArea.Children.Count;
+            if (context.SaveState)
+                prevCount = paintArea.Children.Count;
         }
 
 

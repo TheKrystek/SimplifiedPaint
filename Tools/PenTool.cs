@@ -1,9 +1,5 @@
 ﻿using SimplifiedPaintCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -51,6 +47,17 @@ namespace SimplifiedPaint
         {
             // no action
         }
+
+
+        public void OnUndo()
+        {
+            // no action
+        }
+
+        public void OnRedo()
+        {
+            // no action
+        }
         #endregion
 
         #region Options and context
@@ -69,6 +76,7 @@ namespace SimplifiedPaint
             set
             {
                 context = value;
+                context.Canvas.Cursor = Cursors.Arrow;
             }
         }
         #endregion
