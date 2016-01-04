@@ -22,7 +22,6 @@ namespace SimplifiedPaint
         {
             plugins.Clear();
             loadLibraries();
-            createPluginsModel();
         }
 
         private void loadLibraries()
@@ -32,10 +31,12 @@ namespace SimplifiedPaint
             if (!d.Exists)
                 return;
 
+            models.Clear();
+
             try
             {
                 foreach (var file in d.GetFiles("*.dll"))
-                    loadLibrary(file.FullName);
+                    loadLibrary(file);
             }
             catch (Exception)
             {
@@ -44,29 +45,25 @@ namespace SimplifiedPaint
            
         }
 
-        private void loadLibrary(string path)
+        private void loadLibrary(FileInfo path)
         {
-            string assembly = Path.GetFullPath(path);
+            string assembly = Path.GetFullPath(path.FullName);
             Assembly ptrAssembly = Assembly.LoadFile(assembly);
+
             foreach (Type item in ptrAssembly.GetTypes())
             {
                 if (!item.IsClass) continue;
-                if (item.GetInterfaces().Contains(typeof(IToolPlugin)))
-                {
-                    Plugins.Add((IToolPlugin)Activator.CreateInstance(item));
-                    return;
+                if (item.GetInterfaces().Contains(typeof(IToolPlugin))) {
+                    var plugin = (IToolPlugin)Activator.CreateInstance(item);
+                    Plugins.Add(plugin);
+                    var model = new PluginModel(plugin);
+                    model.File = path.Name;
+                    models.Add(model);
                 }
             }
-            throw new Exception("Invalid DLL, Interface not found!");
         }
 
 
-        private void createPluginsModel()
-        {
-            models.Clear();
-            foreach (var item in plugins)
-                models.Add(new PluginModel(item));
-        }
 
         #region Getters and setters
         public static PluginLoader Instance

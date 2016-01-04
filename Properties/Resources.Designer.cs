@@ -61,6 +61,15 @@ namespace SimplifiedPaint.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This program has been written as a student project. More info on github - link above..
+        /// </summary>
+        internal static string AppAbout {
+            get {
+                return ResourceManager.GetString("AppAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         internal static string AppCancel {

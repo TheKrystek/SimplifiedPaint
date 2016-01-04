@@ -117,16 +117,175 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppAbout" xml:space="preserve">
+    <value>Program powstał na zaliczenie przedmiotu Technologie programistyczne - aplikacje lokalne. Więcej inforamcji na githubie - link u góry ekranu.</value>
+  </data>
+  <data name="AppCancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="AppDiscard" xml:space="preserve">
+    <value>Odrzuć</value>
+  </data>
+  <data name="AppDiscardDescription" xml:space="preserve">
+    <value>Odrzuć wszystkie zmiany (Ctrl + D)</value>
+  </data>
+  <data name="AppDiscardMessage" xml:space="preserve">
+    <value>Czy chcesz odrzucić wszystkie niezapisnae zmiany? Powrót do nich nie będzie możliwy.</value>
+  </data>
+  <data name="AppDiscardMessageTitle" xml:space="preserve">
+    <value>Odrzucić zmiany?</value>
+  </data>
+  <data name="AppHistorySize" xml:space="preserve">
+    <value>Możesz cofnąć do {0} ruchów</value>
+  </data>
   <data name="AppNone" xml:space="preserve">
-    <value>brak</value>
+    <value>pusty</value>
+  </data>
+  <data name="AppOk" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="AppOpen" xml:space="preserve">
+    <value>Otwórz...</value>
+  </data>
+  <data name="AppOpenDescription" xml:space="preserve">
+    <value>Otwórz grafikę (Ctrl + O)</value>
+  </data>
+  <data name="AppRedo" xml:space="preserve">
+    <value>Ponów (Ctrl + Y)</value>
+  </data>
+  <data name="AppResize" xml:space="preserve">
+    <value>Zmień rozmiar (Ctrl + R)</value>
+  </data>
+  <data name="AppResizeDescription" xml:space="preserve">
+    <value>Zmień rozmiar płótna</value>
+  </data>
+  <data name="AppResizeHeight" xml:space="preserve">
+    <value>Wysokość</value>
+  </data>
+  <data name="AppResizeLock" xml:space="preserve">
+    <value>Zablokowane</value>
+  </data>
+  <data name="AppResizeLockDescription" xml:space="preserve">
+    <value>Zablokuj proporcje między wysokością a szerokością</value>
+  </data>
+  <data name="AppResizeWidth" xml:space="preserve">
+    <value>Szerokość</value>
+  </data>
+  <data name="AppSave" xml:space="preserve">
+    <value>Zapisz</value>
+  </data>
+  <data name="AppSaveDescription" xml:space="preserve">
+    <value>Zapisz jako PNG (Ctrl + S)</value>
+  </data>
+  <data name="AppSaveFileOverwrite" xml:space="preserve">
+    <value>Plik o takiej nazwie już istnieje. Czy chcesz go nadpisać?</value>
+  </data>
+  <data name="AppSaveFileQuestion" xml:space="preserve">
+    <value>Istnieją niezapisane zmiany. Czy chcesz je zazapisać?</value>
+  </data>
+  <data name="AppSaveFileTitle" xml:space="preserve">
+    <value>Zapisz</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>PL title</value>
+    <value>Uproszczony Paint</value>
+  </data>
+  <data name="AppUndo" xml:space="preserve">
+    <value>Cofnij (Ctrl + Z)</value>
+  </data>
+  <data name="CanvasColorPickerDescription" xml:space="preserve">
+    <value>Zmienia kolor pierwszoplanowy i drugoplanowy dla wybranego narzędzia</value>
+  </data>
+  <data name="CanvasCurrnetTool" xml:space="preserve">
+    <value>Aktualne narzędzie: {0}</value>
+  </data>
+  <data name="CanvasIsNew" xml:space="preserve">
+    <value>Nowy obraz</value>
+  </data>
+  <data name="CanvasIsSaved" xml:space="preserve">
+    <value>Zapisany</value>
+  </data>
+  <data name="CanvasIsUnsaved" xml:space="preserve">
+    <value>Niezapisany</value>
+  </data>
+  <data name="CanvasResizeHorizontal" xml:space="preserve">
+    <value>Przeciągnij by zmienić wysokość</value>
+  </data>
+  <data name="CanvasResizeVertical" xml:space="preserve">
+    <value>Przeciągnij by zmienić szerokość</value>
+  </data>
+  <data name="CanvasSize" xml:space="preserve">
+    <value>Rozmiar płótna: {0}x{1}</value>
+  </data>
+  <data name="CanvasThicknessDescription" xml:space="preserve">
+    <value>Zmiania grubość wybranego narzędzia</value>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>github</value>
+  </data>
+  <data name="MainPageName" xml:space="preserve">
+    <value>Rysuj</value>
+  </data>
+  <data name="PluginsAuthor" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="PluginsDescription" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="PluginsEnabled" xml:space="preserve">
+    <value>Aktywny</value>
+  </data>
+  <data name="PluginsFile" xml:space="preserve">
+    <value>Plik</value>
+  </data>
+  <data name="PluginsIcon" xml:space="preserve">
+    <value>Ikona</value>
+  </data>
+  <data name="PluginsName" xml:space="preserve">
+    <value>Nazwa</value>
+  </data>
+  <data name="PluginsVersion" xml:space="preserve">
+    <value>Wersja</value>
+  </data>
+  <data name="SettingsPageAbout" xml:space="preserve">
+    <value>O programie</value>
+  </data>
+  <data name="SettingsPageAppearance" xml:space="preserve">
+    <value>Wygląd</value>
+  </data>
+  <data name="SettingsPageColor" xml:space="preserve">
+    <value>Kolor:</value>
+  </data>
+  <data name="SettingsPageFontSize" xml:space="preserve">
+    <value>Rozmiar czcionki:</value>
+  </data>
+  <data name="SettingsPageInterface" xml:space="preserve">
+    <value>Interfejs</value>
+  </data>
+  <data name="SettingsPageLanguage" xml:space="preserve">
+    <value>Język:</value>
+  </data>
+  <data name="SettingsPageName" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="SettingsPagePlugins" xml:space="preserve">
+    <value>Wtyczki</value>
+  </data>
+  <data name="SettingsPageTheme" xml:space="preserve">
+    <value>Skórka:</value>
   </data>
   <data name="ToolsOptionsAdvanced" xml:space="preserve">
-    <value>Zaawansowane</value>
+    <value>Zaawanasowane</value>
+  </data>
+  <data name="ToolsOptionsBackColor" xml:space="preserve">
+    <value>Drugoplanowy</value>
+  </data>
+  <data name="ToolsOptionsForeColor" xml:space="preserve">
+    <value>Pierwszoplanowy</value>
   </data>
   <data name="ToolsOptionsStandard" xml:space="preserve">
-    <value>Proste</value>
+    <value>Standard</value>
+  </data>
+  <data name="ToolsOptionsThickness" xml:space="preserve">
+    <value>Grubość</value>
   </data>
 </root>

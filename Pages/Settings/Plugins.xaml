@@ -28,6 +28,7 @@
                         <mui:DataGridTextColumn Header="{lex:Loc PluginsDescription}" Binding="{Binding Description}" Width="*" MinWidth="50" IsReadOnly="True"/>
                         <mui:DataGridTextColumn Header="{lex:Loc PluginsAuthor}" Binding="{Binding Author}" Width="*" MinWidth="50" IsReadOnly="True"/>
                         <mui:DataGridTextColumn Header="{lex:Loc PluginsVersion}" Binding="{Binding Version}" Width="*"  MinWidth="50" IsReadOnly="True"/>
+                        <mui:DataGridTextColumn Header="{lex:Loc PluginsFile}" Binding="{Binding File}" Width="*"  MinWidth="50" IsReadOnly="True"/>
                         <mui:DataGridCheckBoxColumn Header="{lex:Loc PluginsEnabled}" Binding="{Binding Enabled}" Width="*" MinWidth="30" />
                       
                     </DataGrid.Columns>

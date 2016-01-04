@@ -16,6 +16,7 @@ namespace SimplifiedPaint
         private IToolPlugin plugin;
         private bool enabled = false;
         Geometry icon;
+        private string file;
 
         public PluginModel(IToolPlugin plugin)
         {
@@ -33,6 +34,8 @@ namespace SimplifiedPaint
         public string Author { get { return Plugin.Author; } }
         public string Version { get { return Plugin.Version; } }
         public string Description { get { return Plugin.Tool.GetDescription(LocalizeDictionary.Instance.Culture.Name); } }
+
+
 
         public bool Enabled
         {
@@ -75,6 +78,19 @@ namespace SimplifiedPaint
             set
             {
                 plugin = value;
+            }
+        }
+
+        public string File
+        {
+            get
+            {
+                return file;
+            }
+
+            set
+            {
+                file = value;
             }
         }
     }
