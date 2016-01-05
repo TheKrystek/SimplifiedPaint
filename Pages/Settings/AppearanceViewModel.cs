@@ -51,7 +51,7 @@ namespace SimplifiedPaint.Pages.Settings
         private string selectedFontSize;
 
         private CultureInfo[] languages = {
-                new CultureInfo("en"), new CultureInfo("pl")};
+                new CultureInfo("en"), new CultureInfo("pl"),new CultureInfo("ru")};
 
         private CultureInfo selectedLanguage;
 
